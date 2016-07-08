@@ -19,12 +19,10 @@ public class HillCipher
         return new CStructure(cipherMatrix);
     }
     
-    
-    public static CStructure decrypt(CStructure cipher, CStructure key)
+    public static CStructure invKeyDecrypt(CStructure cipher, CStructure invKey)
     {
-        String plainText        =   "";
-        int[][] keyMatrix       =   key.getMatrix();
-     //   int[][] invKeyMatrix    =   MatrixUtils.getInverse(keyMatrix);
+        String plainText    =   "";
+        int[][] keyMatrix   =   invKey.getMatrix();
         
         for(int i = 0; i < cipher.getNumRows(); i++)
         {
@@ -39,6 +37,12 @@ public class HillCipher
         } 
         
         return new CStructure(plainText);
+    }
+    
+    public static CStructure decrypt(CStructure cipher, CStructure key)
+    {
+        CStructure invKey   =   new CStructure(MatrixUtils.getInverse(key.getMatrix()));
+        return invKeyDecrypt(cipher, invKey);
     }
 
     public static void main(String[] args)

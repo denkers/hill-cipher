@@ -50,7 +50,7 @@ public class HillCipherBreaker
             int[][] inverse             =   MatrixUtils.getInverse(cipherTranspose);
 
             CStructure key              =   new CStructure(MatrixUtils.multiplyDimMatrix(guessTranspose, inverse, 26));
-            CStructure decryptedCipher  =   HillCipher.decrypt(cipher, key);
+            CStructure decryptedCipher  =   HillCipher.invKeyDecrypt(cipher, key);
 
             return new SimpleEntry(key, decryptedCipher);
         }
