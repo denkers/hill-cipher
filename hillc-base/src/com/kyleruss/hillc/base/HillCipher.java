@@ -37,7 +37,7 @@ public class HillCipher
     
     public static CStructure decrypt(CStructure cipher, CStructure key, int mod)
     {
-        CStructure invKey   =   new CStructure(MatrixUtils.getInverse(key.getMatrix()), mod);
+        CStructure invKey   =   new CStructure(MatrixUtils.getInverse(key.getMatrix(), mod), mod);
         return invKeyDecrypt(cipher, invKey, mod);
     }
 

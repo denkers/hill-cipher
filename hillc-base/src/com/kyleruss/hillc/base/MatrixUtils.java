@@ -113,7 +113,7 @@ public class MatrixUtils
         return x;
     }
     
-    public static int[] getPlaintextVector(String textSegment, int size)
+    public static int[] getPlaintextVector(String textSegment, int size, int mod)
     {
         int[] pTextVector   =   new int[size];
         for(int i = 0; i < size; i++)
@@ -121,7 +121,13 @@ public class MatrixUtils
             int charCode;
             
             if(textSegment.length() <= i) charCode = 0;
-            else charCode    =   alphaCharList.indexOf(textSegment.charAt(i));//textSegment.charAt(i) - '0';
+            else 
+            {
+                if(mod == 26)
+                    charCode    =   alphaCharList.indexOf(textSegment.charAt(i));
+                else
+                    charCode    =   textSegment.charAt(i) - '0';
+            }
             
             pTextVector[i]  =   charCode;
         }
@@ -129,7 +135,7 @@ public class MatrixUtils
         return pTextVector;
     }
     
-    public static int[][] getStrMatrix(String str, int size)
+    public static int[][] getStrMatrix(String str, int size, int mod)
     {
         int tSize               =   str.length();
         int n                   =   tSize / size;
@@ -139,7 +145,7 @@ public class MatrixUtils
         for(int i = 0, j = 0; i < n; i++, j += size)
         {
             String textSegment  =   (tSize < j + size)? str.substring(j) : str.substring(j, j + size);
-            plainTextMatrix[i]  =   getPlaintextVector(textSegment, size);
+            plainTextMatrix[i]  =   getPlaintextVector(textSegment, size, mod);
         }
         
         return plainTextMatrix;
@@ -150,8 +156,6 @@ public class MatrixUtils
         String text =   "";
         for(int i = 0; i < m.length; i++)
             text += getVectorString(m[i], mod);
-            /*for(int j = 0; j < m[0].length; j++)
-                text += alphaCharList.get(m[i][j]); //(char) (m[i][j] + '0');// */
         
         return text;
     }
@@ -170,33 +174,33 @@ public class MatrixUtils
         return text;
     }
     
-    public static int[][] getInverse(int[][] m)
+    public static int[][] getInverse(int[][] m, int mod)
     {
         int[][] inverseMatrix;
         boolean smallMatrix         =   m.length == 2;
-        int determinant             =   getDeterminant(m, 26);
+        int determinant             =   getDeterminant(m, mod);
         
-        int determinantInverse      =   euclInverse(determinant, 26);
+        int determinantInverse      =   euclInverse(determinant, mod);
         
         if(smallMatrix)
-            inverseMatrix           =   getAdjSmallMatrix(m);
+            inverseMatrix           =   getAdjSmallMatrix(m, mod);
         
         else
         {
             inverseMatrix           =   getTranspose(m);
-            inverseMatrix           =   createCofactorMatrix(inverseMatrix);
+            inverseMatrix           =   createCofactorMatrix(inverseMatrix, mod);
         }
         
-        inverseMatrix               =   scalarMultiplyMatrix(inverseMatrix, determinantInverse, 26);
+        inverseMatrix               =   scalarMultiplyMatrix(inverseMatrix, determinantInverse, mod);
         
         return inverseMatrix;
     }
     
     public static int getDeterminant(int[][] m, int mod)
     {
-        int det =   (m.length == 2? getDeterminantSmall(m) : getDeterminantLarge(m)) % 26;
+        int det =   (m.length == 2? getDeterminantSmall(m) : getDeterminantLarge(m)) % mod;
         if(det < 0)
-            det += 26;
+            det += mod;
         
         return det;
     }
@@ -223,7 +227,7 @@ public class MatrixUtils
         return ad - bc;
     }
     
-    public static int[][] getAdjSmallMatrix(int[][] m)
+    public static int[][] getAdjSmallMatrix(int[][] m, int mod)
     {
         int[][] adjMatrix   =   new int[m.length][m[0].length];
         
@@ -233,14 +237,12 @@ public class MatrixUtils
             {
                 int val =   m[i][j];
                 if((j == 1 && i == 0) || (j == 0 && i == 1))
-                {
                     val *= -1;
-                }
                 
-                val  =   val % 26;
+                val  =   val % mod;
                 
                 if(val < 0)
-                    val += 26;
+                    val += mod;
                 
                 adjMatrix[i][j] = val;
             }
@@ -255,11 +257,11 @@ public class MatrixUtils
     
     public static boolean isInvertible(int[][] m, int mod)
     {
-        int det     =   getDeterminant(m, 26);
+        int det     =   getDeterminant(m, mod);
         return det != 0 && euclInverse(det, mod) > 0;
     }
     
-    private static int[][] createCofactorMatrix(int[][] m)
+    private static int[][] createCofactorMatrix(int[][] m, int mod)
     {
         int[][] cofactorMatrix  =   new int[m.length][m[0].length];
         
@@ -268,14 +270,14 @@ public class MatrixUtils
             for(int j = 0; j < m[0].length; j++)
             {
                 boolean minor        =   (i == 1 && j != 1) || ((i == 0 || i == 2) && j == 1);
-                cofactorMatrix[i][j] =   getCofactorEntry(m, i, j, minor);
+                cofactorMatrix[i][j] =   getCofactorEntry(m, i, j, minor, mod);
             }
         }
         
         return cofactorMatrix;
     }
     
-    private static int getCofactorEntry(int[][] m, int row, int col, boolean minor)
+    private static int getCofactorEntry(int[][] m, int row, int col, boolean minor, int mod)
     {
         int[][] tempM       =   new int[2][2];
         int y               =   0;
@@ -305,10 +307,10 @@ public class MatrixUtils
             result      =   result * -1;
         
         result          =   result == -0? 0 : result;
-        result          =   result % 26;
+        result          =   result % mod;
         
         if(result < 0)
-            result      +=  26;
+            result      +=  mod;
         
         return result;
     }
@@ -366,7 +368,7 @@ public class MatrixUtils
     public static void main(String[] args)
     {
         int[][] a   =   new int[][] {{19, 7}, {7, 4}};
-        int[][] inv    =   getInverse(a);
+        int[][] inv    =   getInverse(a, 26);
         System.out.println(matrixToString(inv));
     }
     

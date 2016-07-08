@@ -23,7 +23,7 @@ public class CStructure
     private void initMatrix()
     {
         int size    =   getVectorSize();
-        matrix      =   MatrixUtils.getStrMatrix(text, size);
+        matrix      =   MatrixUtils.getStrMatrix(text, size, mod);
     }
     
     private void initText()
@@ -81,6 +81,11 @@ public class CStructure
     public String getText()
     {
         return text;
+    }
+    
+    public int getMod()
+    {
+        return mod;
     }
     
     @Override

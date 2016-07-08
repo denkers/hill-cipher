@@ -38,7 +38,6 @@ public class HillCipherBreaker
         CStructure guessStruc       =   getBigrams(knownPlaintext, startIndex);
         CStructure cipherStruc      =   getBigrams(cipher.getText(), startOffset);
         
-        System.out.println("[" + offset + "] cipher: " + testStr(cipherStruc.getText()) + " guess: " + testStr(guessStruc.getText()));
         int[][] guessTranspose      =   MatrixUtils.getTranspose(guessStruc.getMatrix());
         int[][] cipherTranspose     =   MatrixUtils.getTranspose(cipherStruc.getMatrix());
         
@@ -47,10 +46,10 @@ public class HillCipherBreaker
         
         else
         {
-            int[][] inverse             =   MatrixUtils.getInverse(cipherTranspose);
+            int[][] inverse             =   MatrixUtils.getInverse(cipherTranspose, 26);
 
-            CStructure key              =   new CStructure(MatrixUtils.multiplyDimMatrix(guessTranspose, inverse, 26));
-            CStructure decryptedCipher  =   HillCipher.invKeyDecrypt(cipher, key);
+            CStructure key              =   new CStructure(MatrixUtils.multiplyDimMatrix(guessTranspose, inverse, 26), 26);
+            CStructure decryptedCipher  =   HillCipher.invKeyDecrypt(cipher, key, 26);
 
             return new SimpleEntry(key, decryptedCipher);
         }
@@ -58,22 +57,22 @@ public class HillCipherBreaker
     
     public static CStructure getBigrams(String text, int offset)
     {
-        CStructure bigramA      =   new CStructure(text.substring(offset, offset + 2));
-        CStructure bigramB      =   new CStructure(text.substring(offset + 2, offset + 4));
+        CStructure bigramA      =   new CStructure(text.substring(offset, offset + 2), 26);
+        CStructure bigramB      =   new CStructure(text.substring(offset + 2, offset + 4), 26);
         int[][] bigramMatrix    =   new int[2][2];
         
         bigramMatrix[0]         =   bigramA.getRow(0);
         bigramMatrix[1]         =   bigramB.getRow(0);
         
-        return new CStructure(bigramMatrix);
+        return new CStructure(bigramMatrix, 26);
     }
     
     public static void main(String[] args)
     {
-        CStructure key      =   new CStructure("alph");
-        CStructure text     =   new CStructure("defendthewestwallofthecastle");
-        CStructure cipher   =   new CStructure("fupcmtgzkyukbqfjhuktzkkixtta");
-        CStructure decr     =   HillCipher.decrypt(cipher, key);
+        CStructure key      =   new CStructure("alph", 26);
+        CStructure text     =   new CStructure("defendthewestwallofthecastle", 26);
+        CStructure cipher   =   new CStructure("fupcmtgzkyukbqfjhuktzkkixtta", 26);
+        CStructure decr     =   HillCipher.decrypt(cipher, key, 26);
         String knownText    =   "ofthe";
         
         System.out.println(cipher.getText());
