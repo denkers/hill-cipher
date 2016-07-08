@@ -1,11 +1,12 @@
 
 public class HillCipher 
 {
-    public static int[][] encrypt(String plainText, String key, int size)
+    public static CStructure encrypt(CStructure plainText, CStructure key)
     {
-        int[][] keyMatrix       =   MatrixUtils.getStrMatrix(key, size);
-        int[][] plainTextMatrix =   MatrixUtils.getStrMatrix(plainText, size);
-        int[][] cipherMatrix    =   new int[plainTextMatrix.length][plainTextMatrix[0].length];
+        int size                =   key.getVectorSize();
+        int[][] keyMatrix       =   key.getMatrix();
+        int[][] plainTextMatrix =   plainText.getMatrix();
+        int[][] cipherMatrix    =   new int[plainText.getNumRows()][size];
         
         for(int i = 0; i < plainTextMatrix.length; i++)
         {
@@ -13,24 +14,34 @@ public class HillCipher
             cipherMatrix[i] =   MatrixUtils.multiplyMatrix(keyMatrix, entry, 255);
         } 
         
-        return cipherMatrix;
+        return new CStructure(cipherMatrix);
     }
     
-    public static String decrypt(int[][] cipherMatrix, String key)
+    public static CStructure decrypt(CStructure cipher, CStructure key)
     {
-        String plainText    =   "";
-        int[][] keyMatrix   =   MatrixUtils.getStrMatrix(key, cipherMatrix[0].length);
-        keyMatrix           =   MatrixUtils.getInverse(keyMatrix);
+        String plainText        =   "";
+        int[][] keyMatrix       =   key.getMatrix();
+        int[][] invKeyMatrix    =   MatrixUtils.getInverse(keyMatrix);
         
-        for(int i = 0; i < cipherMatrix.length; i++)
+        for(int i = 0; i < cipher.getVectorSize(); i++)
         {
-            int[] decVector =   MatrixUtils.multiplyMatrix(keyMatrix, cipherMatrix[i], 255);
+            int[] decVector =   MatrixUtils.multiplyMatrix(invKeyMatrix, cipher.getRow(i), 255);
             
-            for(int j = 0; j < decVector.length; j++)
-                plainText += (decVector[j] == 0)? "" : (char) (decVector[j] + '0');
+            if(decVector != null)
+            {
+                for(int j = 0; j < decVector.length; j++)
+                    plainText += (decVector[j] == 0)? "" : (char) (decVector[j] + '0');
+            }
         } 
         
-        return plainText;
+        return new CStructure(plainText);
     }
 
+    public static void main(String[] args)
+    {
+        CStructure key      =   new CStructure("alphabeta");
+        CStructure text     =   new CStructure("wea");
+        CStructure cipher   =   encrypt(text, key);
+        System.out.println(cipher.getMatrixString());
+    }
 }
