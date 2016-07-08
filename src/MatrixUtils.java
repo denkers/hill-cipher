@@ -113,9 +113,6 @@ public class MatrixUtils
         if(determinant < 0)
             determinant += 255;
         
-        else if(determinant == 0)
-            System.out.println("Not invertible");
-        
         int determinantInverse      =   euclInverse(determinant, 255);
         
         
