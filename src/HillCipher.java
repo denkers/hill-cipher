@@ -23,7 +23,7 @@ public class HillCipher
         int[][] keyMatrix       =   key.getMatrix();
         int[][] invKeyMatrix    =   MatrixUtils.getInverse(keyMatrix);
         
-        for(int i = 0; i < cipher.getVectorSize(); i++)
+        for(int i = 0; i < cipher.getNumRows(); i++)
         {
             int[] decVector =   MatrixUtils.multiplyMatrix(invKeyMatrix, cipher.getRow(i), 255);
             
@@ -42,6 +42,7 @@ public class HillCipher
         CStructure key      =   new CStructure("alphabeta");
         CStructure text     =   new CStructure("wea");
         CStructure cipher   =   encrypt(text, key);
-        System.out.println(cipher.getMatrixString());
+        CStructure dec      =   decrypt(cipher, key);
+        System.out.println(dec.getText());
     }
 }
