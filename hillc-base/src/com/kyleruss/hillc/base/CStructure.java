@@ -4,16 +4,19 @@ public class CStructure
 {
     private int[][] matrix;
     private String text;
+    int mod;
     
-    public CStructure(int[][] matrix)
+    public CStructure(int[][] matrix, int mod)
     {
         this.matrix =   matrix;
+        this.mod    =   mod;
         initText();
     }
     
-    public CStructure(String text)
+    public CStructure(String text, int mod)
     {
         this.text   =   text;
+        this.mod    =   mod;
         initMatrix();
     }
     
@@ -25,7 +28,7 @@ public class CStructure
     
     private void initText()
     {
-        text  =   MatrixUtils.getMatrixString(matrix);
+        text  =   MatrixUtils.getMatrixString(matrix, mod);
     }
     
     public int getVectorSize()

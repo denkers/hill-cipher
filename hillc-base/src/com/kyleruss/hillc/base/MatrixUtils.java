@@ -145,22 +145,27 @@ public class MatrixUtils
         return plainTextMatrix;
     }
     
-    public static String getMatrixString(int[][] m)
+    public static String getMatrixString(int[][] m, int mod)
     {
         String text =   "";
         for(int i = 0; i < m.length; i++)
-            text += getVectorString(m[i]);
+            text += getVectorString(m[i], mod);
             /*for(int j = 0; j < m[0].length; j++)
                 text += alphaCharList.get(m[i][j]); //(char) (m[i][j] + '0');// */
         
         return text;
     }
     
-    public static String getVectorString(int[] v)
+    public static String getVectorString(int[] v, int mod)
     {
         String text =   "";
         for(int i = 0; i < v.length; i++)
-            text += alphaCharList.get(v[i]);
+        {
+            if(mod == 26)
+                text += alphaCharList.get(v[i]);
+            else
+                text += (v[i] == 0)? "" : (char) (v[i] + '0');
+        }
         
         return text;
     }
