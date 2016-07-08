@@ -5,8 +5,8 @@ public class MatrixUtils
 {
     public static int[] multiplyMatrix(int[][] a, int[] b, int mod)
     {
-        int[] resultMatrix   =   new int[b.length];
         int m                =   b.length;
+        int[] resultMatrix   =   new int[m];
         
         for(int i = 0; i < m; i++)
         {
@@ -24,6 +24,26 @@ public class MatrixUtils
         
         return resultMatrix;
     }
+    
+    public static int[][] multiplyDimMatrix(int[][] a, int[][] b, int mod)
+    {
+        int n                   =   a.length;
+        int[][] resultMatrix    =   new int[n][n];
+        
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                for(int k = 0; k < n; k++)
+                    resultMatrix[i][j]  +=   a[i][k] * b[k][j];
+                
+                resultMatrix[i][j]  =   resultMatrix[i][j] % mod;
+            }
+        }
+        
+        return resultMatrix;
+    }
+    
     
     public static String vectorToString(int[] v)
     {
@@ -291,5 +311,14 @@ public class MatrixUtils
         }
         
         return result;
+    }
+    
+    public static void main(String[] args)
+    {
+        int[][] a   =   new int[][] {{5, 7}, {19, 4}};
+        int[][] b   =   new int[][] {{19, 14}, {24, 15}};
+        
+        int[][] result  =   multiplyDimMatrix(a, b, 255);
+        System.out.println(matrixToString(result));
     }
 }
