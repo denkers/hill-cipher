@@ -1,3 +1,5 @@
 build/
 test/
+dist/
+lib/
 /hillc-breaker/nbproject/private/
