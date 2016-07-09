@@ -9,6 +9,7 @@ public class BreakerWindow
 {
     private static BreakerWindow instance;
     private JFrame frame;
+    private BreakerPanel panel;
     
     private BreakerWindow()
     {
