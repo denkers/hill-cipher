@@ -3,7 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/denker/workspace/projects/hill-cipher/src/MatrixUtils.java</file>
+            <file>file:/home/denker/workspace/projects/hill-cipher/hillc-base/src/com/kyleruss/hillc/base/CStructure.java</file>
+            <file>file:/home/denker/workspace/projects/hill-cipher/hillc-base/src/com/kyleruss/hillc/base/HillCipher.java</file>
+            <file>file:/home/denker/workspace/projects/hill-cipher/hillc-base/src/com/kyleruss/hillc/base/MatrixUtils.java</file>
         </group>
     </open-files>
 </project-private>
