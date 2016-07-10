@@ -35,6 +35,8 @@ public class BreakerWindow
     private void initFrame()
     {
         frame   =   new JFrame("Hill Cipher Breaker - Kyle Russell 2016");
+        panel   =   BreakerPanel.getInstance();
+        frame.getContentPane().add(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
