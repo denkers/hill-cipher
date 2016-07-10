@@ -5,6 +5,7 @@ package com.kyleruss.hillc.breaker;
 import com.kyleruss.hillc.base.CStructure;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -47,13 +49,17 @@ public class BreakerPanel extends JPanel
             cipherField     =   new JTextField();
             knownTextField  =   new JTextField();
             breakerExecBtn  =   new JButton("Crack");
-            
-            add(new JLabel("Cipher text"));
-            add(cipherField);
-            add(new JLabel("Known plain text"));
-            add(knownTextField);
+
+            knownTextField.setPreferredSize(new Dimension(150, 30));
+            cipherField.setPreferredSize(new Dimension(150, 30));
+            JPanel controlWrapper   =   new JPanel(new GridLayout(2, 2));
+            controlWrapper.add(new JLabel("Cipher text"));
+            controlWrapper.add(cipherField);
+            controlWrapper.add(new JLabel("Known text"));
+            controlWrapper.add(knownTextField);
+            add(controlWrapper);
             add(breakerExecBtn);
-            
+
             breakerExecBtn.addActionListener(this);
         }
         
@@ -66,19 +72,24 @@ public class BreakerPanel extends JPanel
             {
                 CStructure cipherStructure                          =   new CStructure(cipherText, 26);
                 List<Map.Entry<CStructure, CStructure>> attemptList =   HillCipherBreaker.breakCipher(cipherStructure, knownText);
-                DefaultListModel listModel                          =   (DefaultListModel) outputPanel.outputList.getModel();
-            
+                DefaultListModel listModel                          =   outputPanel.outputModel;
+                listModel.clear();
+                
+                for(int i = 0; i < attemptList.size(); i++)
+                    listModel.add(i, attemptList.get(i).getValue().getText());
             }
+            
+            else JOptionPane.showMessageDialog(null, "Invalid input");
         }
         
         private boolean validateCipherText(String cipherText)
         {
-            return (cipherText.length() != 4);
+            return (cipherText.length() % 2 == 0);
         }
         
         private boolean validateKnownText(String knownText)
         {
-            return knownText.length() % 2 == 0;
+            return knownText.length() == 5;
         }
 
         @Override
@@ -96,11 +107,13 @@ public class BreakerPanel extends JPanel
     {
         private JList outputList;
         private JScrollPane outputScroll;
+        private DefaultListModel outputModel;
         
         public OutputPanel()
         {
             setLayout(new BorderLayout());
-            outputList      =   new JList();
+            outputModel     =   new DefaultListModel();
+            outputList      =   new JList(outputModel);
             outputScroll    =   new JScrollPane(outputList);   
             add(outputScroll);
         }
