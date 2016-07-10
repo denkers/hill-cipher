@@ -2,10 +2,14 @@
 
 package com.kyleruss.hillc.breaker;
 
+import com.kyleruss.hillc.base.CStructure;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Map;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -59,7 +63,12 @@ public class BreakerPanel extends JPanel
             String knownText    =   knownTextField.getText();
             
             if(validateCipherText(cipherText) && validateKnownText(knownText))
-                System.out.println("Validated!");
+            {
+                CStructure cipherStructure                          =   new CStructure(cipherText, 26);
+                List<Map.Entry<CStructure, CStructure>> attemptList =   HillCipherBreaker.breakCipher(cipherStructure, knownText);
+                DefaultListModel listModel                          =   (DefaultListModel) outputPanel.outputList.getModel();
+            
+            }
         }
         
         private boolean validateCipherText(String cipherText)
