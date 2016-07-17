@@ -16,6 +16,7 @@ public class ChatWindow
     {
         initLookAndFeel();
         initFrame();
+        initMenu();
     }
     
     private void initLookAndFeel()
@@ -31,7 +32,12 @@ public class ChatWindow
             System.out.println("[Error] Failed to initialize application look & feel: " + e.getMessage());
         }
     }
-
+    
+    private void initMenu()
+    {
+        WindowMenu menuBar  =   WindowMenu.getInstance();
+        frame.setJMenuBar(menuBar);
+    }
     
     private void initFrame()
     {
