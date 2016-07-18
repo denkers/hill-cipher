@@ -1,6 +1,7 @@
 
 package com.kyleruss.hillc.client.gui;
 
+import com.kyleruss.hillc.client.Config;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -24,7 +25,7 @@ public class ChatWindow
         
         try
         {
-            UIManager.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel");
+            UIManager.setLookAndFeel(Config.LOOK_AND_FEEL);
         } 
         
         catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e)
@@ -35,13 +36,13 @@ public class ChatWindow
     
     private void initMenu()
     {
-        WindowMenu menuBar  =   WindowMenu.getInstance();
+        WindowMenu menuBar  =   WindowMenu.getInstance(frame);
         frame.setJMenuBar(menuBar);
     }
     
     private void initFrame()
     {
-        frame   =   new JFrame("Hill Cipher Breaker - Kyle Russell 2016");
+        frame   =   new JFrame(Config.WINDOW_TITLE);
         panel   =   MainPanel.getInstance();
         frame.getContentPane().add(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
