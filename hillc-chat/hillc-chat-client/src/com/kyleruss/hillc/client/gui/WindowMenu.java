@@ -48,10 +48,13 @@ public class WindowMenu extends JMenuBar implements ActionListener
         
         if(src == exitItem)
             System.exit(0);
+        
         else if(src == miniItem)
             frame.setState(Frame.ICONIFIED);
+        
         else if(src == maxItem)
             frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        
         else if(src == aboutItem)
             JOptionPane.showMessageDialog(null, "Kyle Russell\nAUT University 2016\ngithub.com/denkers/hill-cipher");
     }
