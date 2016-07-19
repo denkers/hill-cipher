@@ -10,8 +10,9 @@ import javax.swing.JOptionPane;
 public class AppResources 
 {
     private static AppResources instance;
-    private BufferedImage connectImage;
+    private BufferedImage connectImage, chatImage;
     private BufferedImage groupImage, connImage, lockImage;
+    private BufferedImage leaveImage, chatMultiImage;
    
     private AppResources()
     {
@@ -26,6 +27,9 @@ public class AppResources
             groupImage      =   ImageIO.read(new File("data/images/group_icon.png"));
             connImage       =   ImageIO.read(new File("data/images/internet_icon.png"));
             lockImage       =   ImageIO.read(new File("data/images/lock.png"));
+            chatImage       =   ImageIO.read(new File("data/images/pm_image.png"));
+            leaveImage      =   ImageIO.read(new File("data/images/leave_room.png"));
+            chatMultiImage  =   ImageIO.read(new File("data/images/bubbles-alt.png"));
         }
         
         catch(IOException e)
@@ -52,6 +56,21 @@ public class AppResources
     public BufferedImage getLockImage() 
     {
         return lockImage;
+    }
+    
+    public BufferedImage getChatImage()
+    {
+        return chatImage;
+    }
+
+    public BufferedImage getLeaveImage() 
+    {
+        return leaveImage;
+    }
+
+    public BufferedImage getChatMultiImage() 
+    {
+        return chatMultiImage;
     }
     
     public static AppResources getInstance()

@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -34,6 +35,7 @@ public class ConversationPanel extends JPanel
         JPanel titleWrapper =   new JPanel();
         titleWrapper.setBackground(Color.WHITE);
         titleWrapper.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.LIGHT_GRAY));
+        titleLabel.setIcon(new ImageIcon(AppResources.getInstance().getChatMultiImage()));
         titleWrapper.add(titleLabel);
         
         
@@ -56,6 +58,8 @@ public class ConversationPanel extends JPanel
             leaveBtn        =   new JButton("Leave");
             chatInputField  =   new JTextArea();
             chatInputField.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.LIGHT_GRAY));
+            sendBtn.setIcon(new ImageIcon(AppResources.getInstance().getChatImage()));
+            leaveBtn.setIcon(new ImageIcon(AppResources.getInstance().getLeaveImage()));
             
             JPanel controlWrapper   =   new JPanel(new GridLayout(2, 1));
             controlWrapper.setPreferredSize(new Dimension(100, 0));
