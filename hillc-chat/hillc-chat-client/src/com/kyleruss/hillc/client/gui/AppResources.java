@@ -11,6 +11,7 @@ public class AppResources
 {
     private static AppResources instance;
     private BufferedImage connectImage;
+    private BufferedImage groupImage, connImage, lockImage;
    
     private AppResources()
     {
@@ -22,6 +23,9 @@ public class AppResources
         try
         {
             connectImage    =   ImageIO.read(new File("data/images/connect_button.png"));
+            groupImage      =   ImageIO.read(new File("data/images/group_icon.png"));
+            connImage       =   ImageIO.read(new File("data/images/internet_icon.png"));
+            lockImage       =   ImageIO.read(new File("data/images/lock.png"));
         }
         
         catch(IOException e)
@@ -33,6 +37,21 @@ public class AppResources
     public BufferedImage getConnectImage()
     {
         return connectImage;
+    }
+
+    public BufferedImage getGroupImage() 
+    {
+        return groupImage;
+    }
+
+    public BufferedImage getConnImage() 
+    {
+        return connImage;
+    }
+
+    public BufferedImage getLockImage() 
+    {
+        return lockImage;
     }
     
     public static AppResources getInstance()
