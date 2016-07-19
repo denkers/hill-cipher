@@ -12,7 +12,7 @@ public class AppResources
     private static AppResources instance;
     private BufferedImage connectImage, chatImage;
     private BufferedImage groupImage, connImage, lockImage;
-    private BufferedImage leaveImage, chatMultiImage;
+    private BufferedImage leaveImage, chatMultiImage, addImage;
    
     private AppResources()
     {
@@ -30,6 +30,7 @@ public class AppResources
             chatImage       =   ImageIO.read(new File("data/images/pm_image.png"));
             leaveImage      =   ImageIO.read(new File("data/images/leave_room.png"));
             chatMultiImage  =   ImageIO.read(new File("data/images/bubbles-alt.png"));
+            addImage        =   ImageIO.read(new File("data/images/addSmallIcon.png"));
         }
         
         catch(IOException e)
@@ -71,6 +72,11 @@ public class AppResources
     public BufferedImage getChatMultiImage() 
     {
         return chatMultiImage;
+    }
+    
+    public BufferedImage getAddImage()
+    {
+        return addImage;
     }
     
     public static AppResources getInstance()

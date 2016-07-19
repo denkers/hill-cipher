@@ -3,6 +3,7 @@ package com.kyleruss.hillc.client.gui;
 import com.kyleruss.hillc.client.Config;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -55,5 +56,13 @@ public class ConnectPanel extends JPanel
         
         add(Box.createRigidArea(new Dimension(Config.WINDOW_WIDTH, 100)));
         add(wrapper);
+    }
+    
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
     }
 }
