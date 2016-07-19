@@ -18,8 +18,8 @@ public class ChatPanel extends JPanel
         connectPanel    =   new ConnectPanel();
         convoPanel      =   new ConversationPanel();
         
-        add(connectPanel, CONNECT_CARD);
         add(convoPanel, CONVO_CARD);
+        add(connectPanel, CONNECT_CARD);
     }
     
     public void showConnectPanel()

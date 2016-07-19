@@ -8,7 +8,6 @@ import com.kyleruss.jsockchat.server.message.DefaultMessageHandler;
 
 public class ChatMessageHandler implements MessageHandler
 {
-
     @Override
     public ActionHandler getActionHandler(MessageBean mb)
     {

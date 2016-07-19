@@ -2,20 +2,15 @@ package com.kyleruss.hillc.client.gui;
 
 import com.kyleruss.hillc.client.Config;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
 
 public class MainPanel extends JPanel implements ActionListener
 {
