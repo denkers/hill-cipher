@@ -1,7 +1,7 @@
 
 package com.kyleruss.hillc.client.gui;
 
-import com.kyleruss.jsockchat.commons.message.BroadcastMsgBean;
+import com.kyleruss.hillc.client.ChatConversation;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -89,13 +89,26 @@ public class ConversationPanel extends JPanel
             
             add(chatInputField, BorderLayout.CENTER);
             add(controlWrapper, BorderLayout.EAST);
-            
+            sendBtn.addActionListener(this);
+            leaveBtn.addActionListener(this);
         }
-
+        
+        private void sendMsg()
+        {
+            String message                  =   chatInputField.getText();
+            ChatConversation conversation   =   parentPanel.getConversation();   
+            String dispName                 =   conversation.getDisplayName();
+            
+            addMessage(dispName, new Date(), message);
+            conversation.sendMessage(message);
+        }
+        
         @Override
         public void actionPerformed(ActionEvent e) 
         {
             Object src  =   e.getSource();
+            if(src == sendBtn)
+                sendMsg();
         }
     }
 }

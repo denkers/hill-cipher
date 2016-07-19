@@ -44,6 +44,26 @@ public class ChatPanel extends JPanel
     {
         changeView(TRANSITION_CARD);
     }
+
+    public ConnectPanel getConnectPanel()
+    {
+        return connectPanel;
+    }
+
+    public ConversationPanel getConvoPanel() 
+    {
+        return convoPanel;
+    }
+
+    public TransitionPanel getTransitionPanel() 
+    {
+        return transitionPanel;
+    }
+
+    public ChatConversation getConversation() 
+    {
+        return conversation;
+    }
     
     public void changeView(String cardName)
     {

@@ -1,5 +1,5 @@
 
-package com.kyleruss.hillc.client;
+package com.kyleruss.hillc.client.message;
 
 import com.kyleruss.jsockchat.commons.io.MessageHandler;
 import com.kyleruss.jsockchat.commons.message.ActionHandler;

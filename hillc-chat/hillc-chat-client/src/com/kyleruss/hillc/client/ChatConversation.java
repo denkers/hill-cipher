@@ -75,6 +75,7 @@ public class ChatConversation
             RequestMessage reqMessage       =   ClientManager.getInstance().prepareMessage(messageBean);
             reqMessage.setProperty("display_name", displayName);
             ClientManager.getInstance().sendRequest(reqMessage);
+            parentPanel.showTransitionPanel();
         }
         
         catch(IOException e)

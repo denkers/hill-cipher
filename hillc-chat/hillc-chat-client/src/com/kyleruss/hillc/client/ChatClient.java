@@ -1,6 +1,7 @@
 
 package com.kyleruss.hillc.client;
 
+import com.kyleruss.hillc.client.message.ChatMessageHandler;
 import com.kyleruss.hillc.client.gui.ChatWindow;
 import com.kyleruss.jsockchat.client.core.ClientConfig;
 import com.kyleruss.jsockchat.client.core.ClientManager;
