@@ -45,8 +45,11 @@ public class ConversationPanel extends JPanel
         add(titleWrapper, BorderLayout.NORTH);
         add(chatList, BorderLayout.CENTER);
         add(controlPanel, BorderLayout.SOUTH);
-        
-        addMessage("kyle", new Date(), "Hey!!");
+    }
+    
+    public void addServerMessage(Date timeSent, String message)
+    {
+        addMessage("SERVER", timeSent, message);
     }
     
     public void addMessage(String name, Date timeSent, String message)
