@@ -10,14 +10,16 @@ public class MainPanel extends JPanel
 {
     private static MainPanel instance;
     private ConnectPanel connectPanel;
+    private ConversationPanel conversationPanel;
     
     private MainPanel()
     {
         setPreferredSize(new Dimension(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT));
         setBackground(Color.WHITE);
         setLayout(new BorderLayout());
-        connectPanel    =   new ConnectPanel();
-        add(connectPanel);
+        connectPanel        =   new ConnectPanel();
+        conversationPanel   =   new ConversationPanel();
+        add(conversationPanel);
     }
     
     public static MainPanel getInstance()

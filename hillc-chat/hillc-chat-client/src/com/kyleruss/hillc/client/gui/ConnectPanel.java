@@ -29,7 +29,12 @@ public class ConnectPanel extends JPanel
         JLabel nickNameLabel    =   new JLabel("Display name");
         JLabel roomNameLabel    =   new JLabel("Room name");
         JLabel keyLabel         =   new JLabel("Key");
-        connectButton.setIcon(new ImageIcon(AppResources.getInstance().getConnectImage()));
+        AppResources resources  =   AppResources.getInstance();
+        nickNameLabel.setIcon(new ImageIcon(resources.getGroupImage()));
+        roomNameLabel.setIcon(new ImageIcon(resources.getConnImage()));
+        keyLabel.setIcon(new ImageIcon(resources.getLockImage()));
+        
+        connectButton.setIcon(new ImageIcon(resources.getConnectImage()));
         nickNameField.setPreferredSize(new Dimension(120, 25));
         roomNameField.setPreferredSize(new Dimension(120, 25));
         keyField.setPreferredSize(new Dimension(120, 25));
