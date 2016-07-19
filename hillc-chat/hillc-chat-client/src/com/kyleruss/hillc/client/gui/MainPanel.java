@@ -16,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class MainPanel extends JPanel implements ActionListener
 {
@@ -70,6 +69,19 @@ public class MainPanel extends JPanel implements ActionListener
             chatPanes.remove(name);
             chatTabPane.remove(index);
         }
+    }
+    
+    public void removeChatPane()
+    {
+        int index   =   chatTabPane.getSelectedIndex();
+        
+        if(index != -1)
+        {
+            String name =   chatTabPane.getTitleAt(index);
+            chatPanes.remove(name);
+            chatTabPane.remove(index);
+        }
+        
     }
     
     public Map<String, ChatPanel> getChatPanes()

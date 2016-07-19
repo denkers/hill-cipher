@@ -69,6 +69,12 @@ public class WindowMenu extends JMenuBar implements ActionListener
         
         else if(src == aboutItem)
             JOptionPane.showMessageDialog(null, "Kyle Russell\nAUT University 2016\ngithub.com/denkers/hill-cipher");
+        
+        else if(src == newChatItem)
+            MainPanel.getInstance().addChatRoom();
+        
+        else if(src == leaveChatItem)
+            MainPanel.getInstance().removeChatPane();
     }
     
     public static WindowMenu getInstance(JFrame frame)
