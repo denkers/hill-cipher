@@ -21,9 +21,9 @@ public class ChatPanel extends JPanel
         convoPanel      =   new ConversationPanel();
         transitionPanel =   new TransitionPanel();
         
-        add(transitionPanel);
-        add(convoPanel, CONVO_CARD);
         add(connectPanel, CONNECT_CARD);
+        add(convoPanel, CONVO_CARD);
+        add(transitionPanel, TRANSITION_CARD);
     }
     
     public void showConnectPanel()
