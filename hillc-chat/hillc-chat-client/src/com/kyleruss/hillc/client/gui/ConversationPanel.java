@@ -18,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 public class ConversationPanel extends JPanel
 {
@@ -26,14 +25,16 @@ public class ConversationPanel extends JPanel
     private DefaultListModel chatModel;
     private JLabel titleLabel;
     private ControlPanel controlPanel;
+    private ChatPanel parentPanel;
     
-    public ConversationPanel()
+    public ConversationPanel(ChatPanel parentPanel)
     {
         setLayout(new BorderLayout());
-        chatModel       =   new DefaultListModel();
-        chatList        =   new JList(chatModel);
-        controlPanel    =   new ControlPanel();
-        titleLabel      =   new JLabel("Chatting with");
+        this.parentPanel    =   parentPanel;
+        chatModel           =   new DefaultListModel();
+        chatList            =   new JList(chatModel);
+        controlPanel        =   new ControlPanel();
+        titleLabel          =   new JLabel("Chatting with");
         
         JPanel titleWrapper =   new JPanel();
         titleWrapper.setBackground(Color.WHITE);

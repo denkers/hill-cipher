@@ -1,11 +1,19 @@
 
 package com.kyleruss.hillc.client;
 
+import com.kyleruss.hillc.client.gui.ChatPanel;
+import com.kyleruss.jsockchat.client.core.ClientManager;
+import com.kyleruss.jsockchat.commons.message.BroadcastMsgBean;
+import com.kyleruss.jsockchat.commons.message.RequestMessage;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+
 public class ChatConversation 
 {
     private String displayName;
     private String key;
     private String roomName;
+    private ChatPanel parentPanel;
     
     public ChatConversation()
     {
@@ -49,5 +57,29 @@ public class ChatConversation
         this.roomName = roomName;
     }
     
+    public void setParentPanel(ChatPanel parentPanel)
+    {
+        this.parentPanel    =   parentPanel;
+    }
     
+    public ChatPanel getParentPanel()
+    {
+        return parentPanel;
+    }
+    
+    public void sendMessage(String message)
+    {
+        try
+        {
+            BroadcastMsgBean messageBean    =   new BroadcastMsgBean(roomName, message);
+            RequestMessage reqMessage       =   ClientManager.getInstance().prepareMessage(messageBean);
+            reqMessage.setProperty("display_name", displayName);
+            ClientManager.getInstance().sendRequest(reqMessage);
+        }
+        
+        catch(IOException e)
+        {
+            JOptionPane.showMessageDialog(null, "[Error] Failed to send message");
+        }
+    }
 }

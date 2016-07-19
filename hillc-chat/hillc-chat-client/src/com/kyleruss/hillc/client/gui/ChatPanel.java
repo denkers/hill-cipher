@@ -1,6 +1,7 @@
 
 package com.kyleruss.hillc.client.gui;
 
+import com.kyleruss.hillc.client.ChatConversation;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
@@ -13,13 +14,16 @@ public class ChatPanel extends JPanel
     private ConnectPanel connectPanel;
     private ConversationPanel convoPanel;
     private TransitionPanel transitionPanel;
+    private ChatConversation conversation;
     
     public ChatPanel()
     {
         setLayout(new CardLayout());
-        connectPanel    =   new ConnectPanel();
-        convoPanel      =   new ConversationPanel();
-        transitionPanel =   new TransitionPanel();
+        connectPanel    =   new ConnectPanel(this);
+        convoPanel      =   new ConversationPanel(this);
+        transitionPanel =   new TransitionPanel(this);
+        conversation    =   new ChatConversation();
+        conversation.setParentPanel(this);
         
         add(connectPanel, CONNECT_CARD);
         add(convoPanel, CONVO_CARD);

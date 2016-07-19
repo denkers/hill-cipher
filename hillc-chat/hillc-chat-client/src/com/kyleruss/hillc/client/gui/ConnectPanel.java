@@ -18,14 +18,16 @@ public class ConnectPanel extends JPanel
     private JTextField roomNameField;
     private JTextField keyField;
     private JButton connectButton;
+    private ChatPanel parentPanel;
     
-    public ConnectPanel()
+    public ConnectPanel(ChatPanel parentPanel)
     {
         setBackground(Color.WHITE);
-        nickNameField   =   new JTextField();
-        roomNameField   =   new JTextField();
-        keyField        =   new JTextField();
-        connectButton   =   new JButton();
+        this.parentPanel    =   parentPanel;
+        nickNameField       =   new JTextField();
+        roomNameField       =   new JTextField();
+        keyField            =   new JTextField();
+        connectButton       =   new JButton();
 
         JLabel nickNameLabel    =   new JLabel("Display name");
         JLabel roomNameLabel    =   new JLabel("Room name");

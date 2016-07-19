@@ -11,10 +11,12 @@ import javax.swing.JPanel;
 public class TransitionPanel extends JPanel
 {
     private JLabel transitionLabel;
+    private ChatPanel parentPanel;
     
-    public TransitionPanel()
+    public TransitionPanel(ChatPanel parentPanel)
     {
-        transitionLabel =   new JLabel(new ImageIcon("data/images/loadspinner.gif"));
+        this.parentPanel    =   parentPanel;
+        transitionLabel     =   new JLabel(new ImageIcon("data/images/loadspinner.gif"));
         add(transitionLabel);
     }
     
