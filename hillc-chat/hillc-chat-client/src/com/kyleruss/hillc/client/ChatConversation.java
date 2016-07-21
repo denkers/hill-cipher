@@ -73,7 +73,6 @@ public class ChatConversation
         {
             BroadcastMsgBean messageBean    =   new BroadcastMsgBean(roomName, message);
             ChatClient.getInstance().sendMessage(displayName, messageBean);
-            parentPanel.showTransitionPanel();
         }
         
         catch(IOException e)

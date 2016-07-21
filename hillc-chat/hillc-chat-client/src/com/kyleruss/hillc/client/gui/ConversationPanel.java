@@ -94,7 +94,8 @@ public class ConversationPanel extends JPanel
             String message                  =   chatInputField.getText();
             ChatConversation conversation   =   parentPanel.getConversation();   
             String dispName                 =   conversation.getDisplayName();
-            
+
+            chatInputField.setText("");
             addMessage(dispName, new Date(), message);
             conversation.sendMessage(message);
         }
