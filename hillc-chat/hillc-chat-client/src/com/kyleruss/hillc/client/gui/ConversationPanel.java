@@ -23,7 +23,6 @@ public class ConversationPanel extends JPanel
 {
     private JList chatList;
     private DefaultListModel chatModel;
-    private JLabel titleLabel;
     private ControlPanel controlPanel;
     private ChatPanel parentPanel;
     
@@ -34,13 +33,10 @@ public class ConversationPanel extends JPanel
         chatModel           =   new DefaultListModel();
         chatList            =   new JList(chatModel);
         controlPanel        =   new ControlPanel();
-        titleLabel          =   new JLabel("Chatting with");
         
         JPanel titleWrapper =   new JPanel();
         titleWrapper.setBackground(Color.WHITE);
         titleWrapper.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.LIGHT_GRAY));
-        titleLabel.setIcon(new ImageIcon(AppResources.getInstance().getChatMultiImage()));
-        titleWrapper.add(titleLabel);
         
         
         add(titleWrapper, BorderLayout.NORTH);
@@ -56,7 +52,7 @@ public class ConversationPanel extends JPanel
     public void addMessage(String name, Date timeSent, String message)
     {
         String messageStr   =   "[";
-        String dateStr      =   new SimpleDateFormat("h:m a").format(timeSent);
+        String dateStr      =   new SimpleDateFormat("hh:mm a").format(timeSent);
         messageStr          +=  dateStr + "] ";
         messageStr          +=  name + ": ";
         messageStr          +=  message;
