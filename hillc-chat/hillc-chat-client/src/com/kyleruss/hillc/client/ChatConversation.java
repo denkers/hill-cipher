@@ -72,9 +72,7 @@ public class ChatConversation
         try
         {
             BroadcastMsgBean messageBean    =   new BroadcastMsgBean(roomName, message);
-            RequestMessage reqMessage       =   ClientManager.getInstance().prepareMessage(messageBean);
-            reqMessage.setProperty("display_name", displayName);
-            ClientManager.getInstance().sendRequest(reqMessage);
+            ChatClient.getInstance().sendMessage(displayName, messageBean);
             parentPanel.showTransitionPanel();
         }
         

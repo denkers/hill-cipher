@@ -40,6 +40,12 @@ public class MainPanel extends JPanel implements ActionListener
         chatTabPane.add(name, panel);
     }
     
+    
+    public void setChatPane(String name, ChatPanel panel)
+    {
+        chatPanes.put(name, panel);
+    }
+    
     public void addChatRoom()
     {
         ChatPanel panel =   new ChatPanel();
@@ -82,6 +88,11 @@ public class MainPanel extends JPanel implements ActionListener
     public Map<String, ChatPanel> getChatPanes()
     {
         return chatPanes;
+    }
+    
+    public JTabbedPane getChatTabPane()
+    {
+        return chatTabPane;
     }
     
     public static MainPanel getInstance()
