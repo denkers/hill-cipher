@@ -12,13 +12,17 @@ import java.util.List;
 
 public class MatrixUtils
 {
+    //A list holding all english alphabetical characters
     private static List<Character> alphaCharList;
     
+    //initializes the alphaCharList
     static
     {
         initAlphaCharList();
     }
     
+    //initializes the alphaCharList
+    //Adds all english alphabetical characters to the list
     private static void initAlphaCharList()
     {
         alphaCharList   =   new ArrayList<>();
@@ -26,6 +30,13 @@ public class MatrixUtils
             alphaCharList.add(c);
     }
     
+    /**
+     * Multiplies the input matrix a with the input vector b % mod
+     * @param a The matrix to multiply with. a.length = b.length
+     * @param b A vector to multiply with the matrix where b.length = a.length
+     * @param mod The modulus used. See HillCipher.ALPHA_CHARS, HillCipher.ALL_CHARS for options
+     * @return The vector product of the multiplication (a, b) % mod
+     */
     public static int[] multiplyMatrix(int[][] a, int[] b, int mod)
     {
         int m                =   b.length;
@@ -48,6 +59,13 @@ public class MatrixUtils
         return resultMatrix;
     }
     
+    /**
+     * Multiplies the input matrix a with another input matrix b % mod
+     * @param a The matrix to multiply with. a.length = b.length
+     * @param b A matrix to multiply with the matrix where b.length = a.length
+     * @param mod The modulus used. See HillCipher.ALPHA_CHARS, HillCipher.ALL_CHARS for options
+     * @return The matrix product of the multiplication (a, b) % mod
+     */
     public static int[][] multiplyDimMatrix(int[][] a, int[][] b, int mod)
     {
         int n                   =   a.length;
@@ -67,7 +85,11 @@ public class MatrixUtils
         return resultMatrix;
     }
     
-    
+    /**
+     * Creates and returns a formatted string representation of the input vector v
+     * @param v An input vector to get its formatted string representation
+     * @return A formatted string of the input vector: [a, b, c..] 
+     */
     public static String vectorToString(int[] v)
     {
         String str  =   "[";
@@ -78,6 +100,11 @@ public class MatrixUtils
         return str + "]";
     }
     
+    /**
+     * Creates and returns a formatted string represenation of the input matrix m
+     * @param m A matrix to get its formatted string representation
+     * @return A formatted string of the input matrix: [[a, b, c], [d, e, f]]
+     */
     public static String matrixToString(int[][] m)
     {
         String str  =   "";
@@ -94,7 +121,13 @@ public class MatrixUtils
         return str;
     }
     
-    
+    /**
+     * Performs the extended-euclidean and returns the inverse of a 
+     * If an inverse exists then returns x where ax = 1 mod m
+     * @param a The int input whose inverse you want to find
+     * @param mod The modulus used. See HillCipher.ALPHA_CHARS, HillCipher.ALL_CHARS for options
+     * @return The inverse x if ax = 1 mod m, otherwise -1
+     */
     private static int euclInverse(int a, int mod)
     {
         int x       =   0;
@@ -119,6 +152,13 @@ public class MatrixUtils
         return x;
     }
     
+    /**
+     * Creates and returns a vector of size @param size for the input text
+     * @param textSegment A string text to convert to vector array
+     * @param size The size of the resulting vector
+     * @param mod The modulus used. See HillCipher.ALPHA_CHARS, HillCipher.ALL_CHARS for options
+     * @return An int vector representation of the input text
+     */
     public static int[] getPlaintextVector(String textSegment, int size, int mod)
     {
         int[] pTextVector   =   new int[size];
@@ -141,6 +181,13 @@ public class MatrixUtils
         return pTextVector;
     }
     
+    /**
+     * Creates and returns a matrix of size @param size for the input text
+     * @param str A string text to convert to matrix
+     * @param size The size of the resulting matrix
+     * @param mod The modulus used. See HillCipher.ALPHA_CHARS, HillCipher.ALL_CHARS for options
+     * @return An int matrix representation of the input text
+     */
     public static int[][] getStrMatrix(String str, int size, int mod)
     {
         int tSize               =   str.length();
@@ -157,6 +204,12 @@ public class MatrixUtils
         return plainTextMatrix;
     }
     
+    /**
+     * Creates and returns a string representation of the input matrix m
+     * @param m The matrix to get its string representation
+     * @param mod The modulus used. See HillCipher.ALPHA_CHARS, HillCipher.ALL_CHARS for options
+     * @return A string representation of the matrix m
+     */
     public static String getMatrixString(int[][] m, int mod)
     {
         String text =   "";
@@ -166,6 +219,12 @@ public class MatrixUtils
         return text;
     }
     
+    /**
+     * Creates and returns a string representation of the input vector v
+     * @param v The vector to get its string representation
+     * @param mod The modulus used. See HillCipher.ALPHA_CHARS, HillCipher.ALL_CHARS for options
+     * @return A string representation of the vector v
+     */
     public static String getVectorString(int[] v, int mod)
     {
         String text =   "";
@@ -180,12 +239,20 @@ public class MatrixUtils
         return text;
     }
     
+    /**
+     * Computes and returns the inverse matrix of the input matrix m
+     * Works on both 2D and 3D matrices
+     * First computes the inverse of the determinant of the matrix m
+     * Then scalar multiplies the determinant inverse with the computed cofactor matrix
+     * @param m A matrix to compute its inverse
+     * @param mod The modulus used. See HillCipher.ALPHA_CHARS, HillCipher.ALL_CHARS for options
+     * @return The inverse matrix of the input matrix m
+     */
     public static int[][] getInverse(int[][] m, int mod)
     {
         int[][] inverseMatrix;
         boolean smallMatrix         =   m.length == 2;
         int determinant             =   getDeterminant(m, mod);
-        
         int determinantInverse      =   euclInverse(determinant, mod);
         
         if(smallMatrix)
@@ -202,6 +269,13 @@ public class MatrixUtils
         return inverseMatrix;
     }
     
+    /**
+     * Finds the determinant from getDeterminantSmall or getDeterminantLarge
+     * and performs mod operations on the determinant 
+     * @param m The matrix to find the determinant
+     * @param mod The modulus used. See HillCipher.ALPHA_CHARS, HillCipher.ALL_CHARS for options
+     * @return The determinant of the input matrix m
+     */
     public static int getDeterminant(int[][] m, int mod)
     {
         int det =   (m.length == 2? getDeterminantSmall(m) : getDeterminantLarge(m)) % mod;
@@ -211,6 +285,12 @@ public class MatrixUtils
         return det;
     }
     
+    /**
+     * Computes the determinant for a 3D matrix m
+     * @see getDeterminantCol
+     * @param m A 3D matrix whose determinant we want to find
+     * @return The determinant for the input matrix m
+     */
     public static int getDeterminantLarge(int[][] m)
     {
         int value            =   0;
@@ -226,6 +306,11 @@ public class MatrixUtils
         return value;
     }
     
+    /**
+     * Computes the determinant for the 2D matrix m
+     * @param m A 2D matrix 
+     * @return The determinant for the input matrix m
+     */
     public static int getDeterminantSmall(int[][] m)
     {
         int ad  =   m[0][0] * m[1][1];
@@ -233,6 +318,12 @@ public class MatrixUtils
         return ad - bc;
     }
     
+    /**
+     * Computes and returns the adjugate matrix of the input matrix m
+     * @param m A 2D matrix 
+     * @param mod The modulus used. See HillCipher.ALPHA_CHARS, HillCipher.ALL_CHARS for options
+     * @return A 2D adjugate matrix of the input matrix m
+     */
     public static int[][] getAdjSmallMatrix(int[][] m, int mod)
     {
         int[][] adjMatrix   =   new int[m.length][m[0].length];
@@ -261,12 +352,27 @@ public class MatrixUtils
         return adjMatrix;
     }
     
+    /**
+     * Checks if the input matrix m is invertible 
+     * such that the determinant of m is not 0 and
+     * the inverse of the determinant is not < 0
+     * @param m A 2D/3D matrix 
+     * @param mod The modulus used. See HillCipher.ALPHA_CHARS, HillCipher.ALL_CHARS for options
+     * @return true if the matrix m is invertible; false otherwise
+     */
     public static boolean isInvertible(int[][] m, int mod)
     {
         int det     =   getDeterminant(m, mod);
         return det != 0 && euclInverse(det, mod) > 0;
     }
     
+    /**
+     * Creates and returns the cofactor matrix for the input matrix m
+     * @see getCofactorEntry
+     * @param m A 3D matrix
+     * @param mod The modulus used. See HillCipher.ALPHA_CHARS, HillCipher.ALL_CHARS for options
+     * @return The corresponding cofactor matrix 
+     */
     private static int[][] createCofactorMatrix(int[][] m, int mod)
     {
         int[][] cofactorMatrix  =   new int[m.length][m[0].length];
@@ -283,6 +389,15 @@ public class MatrixUtils
         return cofactorMatrix;
     }
     
+    /**
+     * Computes and returns the ij'th entry of cofactor matrix for the input matrix m
+     * @param m A 3D matrix
+     * @param row The ith row of the matrix: i >= 0, i < m.length
+     * @param col The jth row of the matrix: j >= 0, j < m[0].length
+     * @param minor True if the entry is negative; false otherwise
+     * @param mod The modulus used. See HillCipher.ALPHA_CHARS, HillCipher.ALL_CHARS for options
+     * @return The ith row, jth col entry of the cofactor matrix
+     */
     private static int getCofactorEntry(int[][] m, int row, int col, boolean minor, int mod)
     {
         int[][] tempM       =   new int[2][2];
@@ -321,6 +436,13 @@ public class MatrixUtils
         return result;
     }
     
+    /**
+     * Scalar multiplies the input matrix m with the scalar k
+     * @param m A matrix to multiply by k
+     * @param k The int scalar to multiply the matrix with
+     * @param mod The modulus used. See HillCipher.ALPHA_CHARS, HillCipher.ALL_CHARS for options
+     * @return The resulting matrix after it has been multiplied with k
+     */
     public static int[][] scalarMultiplyMatrix(int[][] m, int k, int mod)
     {
         int[][] transformedMatrix   =   new int[m.length][m[0].length];
@@ -331,6 +453,14 @@ public class MatrixUtils
         return transformedMatrix;
     }
     
+    /**
+     * Creates and returns the determinant matrix used to find the det of a matrix
+     * The resulting matrix has m.length rows and m[0].length + 2 columns
+     * Copies the entire matrix into the resulting matrix 
+     * and the first two columns into the last two columns again
+     * @param m The matrix to get its determinant matrix
+     * @return A determinant matrix with m.length rows and m[0].length + 2 columns
+     */
     public static int[][] getDeterminantMatrix(int[][] m)
     {
         int[][] dMatrix  =   new int[m.length][m[0].length + 2];
@@ -342,6 +472,12 @@ public class MatrixUtils
         return dMatrix;
     }
     
+    /**
+     * Computes and returns the transpose of the input matrix m
+     * Flips rows in the input matrix to columns in the resulting matrix
+     * @param m A matrix whose transpose you want to find
+     * @return The transpose matrix for the input matrix m
+     */
     public static int[][] getTranspose(int[][] m)
     {
         int[][] transposeMatrix =   new int[m.length][m[0].length];
@@ -352,6 +488,13 @@ public class MatrixUtils
         return transposeMatrix;
     }   
     
+    /**
+     * Computes and returns determinant column value for the input matrix
+     * @param m A 3D matrix 
+     * @param col The column to compute 
+     * @param posDirection true if the direction is right (positive); false otherwise
+     * @return The computes determinant column value
+     */
     private static int getDeterminantCol(int[][] m, int col, boolean posDirection)
     {
         int result      =   1;
