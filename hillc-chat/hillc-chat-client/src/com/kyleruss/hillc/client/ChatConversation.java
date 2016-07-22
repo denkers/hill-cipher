@@ -1,6 +1,8 @@
 
 package com.kyleruss.hillc.client;
 
+import com.kyleruss.hillc.base.CStructure;
+import com.kyleruss.hillc.base.HillCipher;
 import com.kyleruss.hillc.client.gui.ChatPanel;
 import com.kyleruss.jsockchat.client.core.ClientManager;
 import com.kyleruss.jsockchat.commons.message.BroadcastMsgBean;
@@ -71,7 +73,14 @@ public class ChatConversation
     {
         try
         {
-            BroadcastMsgBean messageBean    =   new BroadcastMsgBean(roomName, message);
+            int charSet                     =   HillCipher.ALL_CHARS;
+            int vecSize                     =   HillCipher.LARGE_V;
+            CStructure plainTextStruc       =   new CStructure(message, charSet, vecSize);
+            CStructure keyStruc             =   new CStructure(key, charSet, vecSize);
+            CStructure encryptedStruc       =   HillCipher.encrypt(plainTextStruc, keyStruc, charSet);
+            String encryptedText            =   encryptedStruc.getText();
+            
+            BroadcastMsgBean messageBean    =   new BroadcastMsgBean(roomName, encryptedText);
             ChatClient.getInstance().sendMessage(displayName, messageBean);
         }
         

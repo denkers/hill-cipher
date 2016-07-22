@@ -1,8 +1,12 @@
 package com.kyleruss.hillc.base;
 
-
 public class HillCipher 
 {
+    public static final int ALPHA_CHARS     =   26;
+    public static final int ALL_CHARS       =   255;
+    public static final int SMALL_V         =   2;
+    public static final int LARGE_V         =   3;
+    
     public static CStructure encrypt(CStructure plainText, CStructure key, int mod)
     {
         int size                =   key.getVectorSize();
@@ -39,5 +43,16 @@ public class HillCipher
     {
         CStructure invKey   =   new CStructure(MatrixUtils.getInverse(key.getMatrix(), mod), mod, cipher.getVectorSize());
         return invKeyDecrypt(cipher, invKey, mod);
+    }
+
+    public static void main(String[] args)
+    {
+        CStructure key      =   new CStructure("alphabeta", ALL_CHARS, LARGE_V);
+        CStructure text     =   new CStructure("wea booz", ALL_CHARS, LARGE_V);
+        CStructure cipher   =   encrypt(text, key, ALL_CHARS);
+        String cipherText   =   cipher.getText();
+        CStructure cCipher  =   new CStructure(cipherText, ALL_CHARS, LARGE_V);
+        CStructure dec      =   decrypt(cCipher, key, ALL_CHARS);
+        System.out.println(dec.getText());
     }
 }

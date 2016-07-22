@@ -364,11 +364,4 @@ public class MatrixUtils
         
         return result;
     }
-    
-    public static void main(String[] args)
-    {
-        String a    =   "a";
-        int code    =   a.charAt(0) - '0';
-    }
-    
 }
