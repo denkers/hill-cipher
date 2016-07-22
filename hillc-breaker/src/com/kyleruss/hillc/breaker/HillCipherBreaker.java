@@ -1,3 +1,8 @@
+//-------------------------------------
+//  Kyle Russell
+//  AUT University 2016
+//  Highly Secured Systems
+//-------------------------------------
 
 package com.kyleruss.hillc.breaker;
 
@@ -11,6 +16,15 @@ import java.util.Map.Entry;
 
 public class HillCipherBreaker 
 {
+    /**
+     * Breaks an input Hill Cipher with some known plain text
+     * Must only contain alphabetic characters and m = 2
+     * @see getAttemptRound
+     * @param cipher The CStructure cipher to break
+     * @param knownPlaintext A length = 5 string of known plain text 
+     * @return A list of all attempts where entry keys are the inverse key and
+     * entry values are the decrypted texts
+     */
     public static List<Entry<CStructure, CStructure>> breakCipher(CStructure cipher, String knownPlaintext)
     {
         List<Entry<CStructure, CStructure>> attemptList =   new ArrayList<>();
@@ -25,12 +39,18 @@ public class HillCipherBreaker
         return attemptList;
     }
     
-    public static String testStr(String s)
-    {
-        return "[" + s.substring(0, 2) + " " + s.substring(2) + "]";
-    }
-    
-    public static Entry<CStructure, CStructure> getAttemptRound(CStructure cipher, String knownPlaintext, int offset)
+    /**
+     * Attempts to break a hill cipher for a given bigram with some known plain text using cribing technique
+     * Gets the bigrams of the cipher and and known plain text at the offset
+     * Then computes their transpose matrices and computes the inverse of the cipher transpose
+     * The inverted key can then be found by multiplying the plain text tranpose with the cipher inverse
+     * Finally we multiply the inverse key with the input cipher to decrypt the cipher
+     * @param cipher A cipher which you are attempting to break
+     * @param knownPlaintext A length = 5 string of known plain text 
+     * @param offset The starting index to get bigrams from @see getBigrams
+     * @return An entry where key => the inverted key used to decrypt, value => the decrypted plain text
+     */
+    private static Entry<CStructure, CStructure> getAttemptRound(CStructure cipher, String knownPlaintext, int offset)
     {
         boolean startBigram         =   offset % 2 == 0;
         int startIndex              =   startBigram? 0 : 1;
@@ -47,7 +67,6 @@ public class HillCipherBreaker
         else
         {
             int[][] inverse             =   MatrixUtils.getInverse(cipherTranspose, 26);
-
             CStructure key              =   new CStructure(MatrixUtils.multiplyDimMatrix(guessTranspose, inverse, 26), 26);
             CStructure decryptedCipher  =   HillCipher.invKeyDecrypt(cipher, key, 26);
 
@@ -55,6 +74,12 @@ public class HillCipherBreaker
         }
     }
     
+    /**
+     * Fetches the bigram for the input text at the offset
+     * @param text A plain text of length >= 2, containing alphabetic characters only
+     * @param offset The starting index to get the bigrams
+     * @return A CStructure containing the 2x2 bigram 
+     */
     public static CStructure getBigrams(String text, int offset)
     {
         CStructure bigramA      =   new CStructure(text.substring(offset, offset + 2), 26);
@@ -65,20 +90,5 @@ public class HillCipherBreaker
         bigramMatrix[1]         =   bigramB.getRow(0);
         
         return new CStructure(bigramMatrix, 26);
-    }
-    
-    public static void main(String[] args)
-    {
-        CStructure key      =   new CStructure("alph", 26);
-        CStructure text     =   new CStructure("defendthewestwallofthecastle", 26);
-        CStructure cipher   =   new CStructure("fupcmtgzkyukbqfjhuktzkkixtta", 26);
-        CStructure decr     =   HillCipher.decrypt(cipher, key, 26);
-        String knownText    =   "ofthe";
-        
-        System.out.println(cipher.getText());
-        List<Entry<CStructure, CStructure>> attempts    =   breakCipher(cipher, knownText);
-        
-        for(Entry<CStructure, CStructure> attempt : attempts)
-            System.out.println(attempt.getValue().getText()); 
     }
 }
