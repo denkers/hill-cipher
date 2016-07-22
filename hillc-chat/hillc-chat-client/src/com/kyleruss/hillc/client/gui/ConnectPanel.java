@@ -1,3 +1,9 @@
+//-------------------------------------
+//  Kyle Russell
+//  AUT University 2016
+//  Highly Secured Systems
+//-------------------------------------
+
 package com.kyleruss.hillc.client.gui;
 
 import com.kyleruss.hillc.client.ChatClient;

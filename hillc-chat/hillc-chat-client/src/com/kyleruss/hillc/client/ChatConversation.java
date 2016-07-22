@@ -1,12 +1,15 @@
+//-------------------------------------
+//  Kyle Russell
+//  AUT University 2016
+//  Highly Secured Systems
+//-------------------------------------
 
 package com.kyleruss.hillc.client;
 
 import com.kyleruss.hillc.base.CStructure;
 import com.kyleruss.hillc.base.HillCipher;
 import com.kyleruss.hillc.client.gui.ChatPanel;
-import com.kyleruss.jsockchat.client.core.ClientManager;
 import com.kyleruss.jsockchat.commons.message.BroadcastMsgBean;
-import com.kyleruss.jsockchat.commons.message.RequestMessage;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
