@@ -1,10 +1,15 @@
 package com.kyleruss.hillc.client.gui;
 
 import com.kyleruss.hillc.client.Config;
+import com.kyleruss.jsockchat.commons.message.JoinRoomMsgBean;
+import com.kyleruss.jsockchat.commons.message.Message;
+import com.kyleruss.jsockchat.commons.message.ResponseMessage;
+import com.kyleruss.jsockchat.commons.message.RoomBean;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.swing.ImageIcon;
@@ -55,6 +60,19 @@ public class MainPanel extends JPanel implements ActionListener
         chatTabPane.setIconAt(index, new ImageIcon(AppResources.getInstance().getChatMultiImage()));
         chatTabPane.setTitleAt(index, "New chat");
         chatTabPane.setSelectedIndex(index);
+    }
+    
+    public void outputToRoom(Message message, String content, String source)
+    {
+        ResponseMessage response    =   (ResponseMessage) message;
+        RoomBean bean               =   (RoomBean) response.getRequestMessage().getMessageBean();
+        ChatPanel chatPanel         =   MainPanel.getInstance().getChatPane(bean.getRoom());
+        chatPanel.showConversationPanel();
+        
+        if(source == null)
+            chatPanel.getConvoPanel().addServerMessage(new Date(), content);
+        else
+            chatPanel.getConvoPanel().addMessage(source, new Date(), content);
     }
     
     public ChatPanel getChatPane(String name)
