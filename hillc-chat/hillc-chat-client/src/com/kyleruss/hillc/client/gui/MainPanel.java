@@ -79,14 +79,14 @@ public class MainPanel extends JPanel implements ActionListener
             chatPanel.getConvoPanel().addMessage(source, new Date(), content);
     }
     
-    public void leaveRoom()
+    public void leaveRoom(String roomName)
     {
-        int index   =   chatTabPane.getSelectedIndex();
+        int index   =   chatTabPane.indexOfTab(roomName);
         if(index != -1)
         {
-            String roomName     =   chatTabPane.getTitleAt(index);
             ChatPanel chatPanel =   chatPanes.get(roomName);
-            if(chatPanel == null) JOptionPane.showMessageDialog(null, "[Error] Cannot leave room");
+            if(chatPanel == null || chatPanel.getCurrentCard().equals(ChatPanel.CONNECT_CARD)) 
+                JOptionPane.showMessageDialog(null, "[Error] Cannot leave room");
             else
             {
                 try
@@ -105,6 +105,16 @@ public class MainPanel extends JPanel implements ActionListener
                     JOptionPane.showMessageDialog(null, "[Error] Failed to leave room");
                 }
             }
+        }
+    }
+    
+    public void leaveRoom()
+    {
+        int index   =   chatTabPane.getSelectedIndex();
+        if(index != -1)
+        {
+            String roomName     =   chatTabPane.getTitleAt(index);
+            leaveRoom(roomName);
         }
     }
     

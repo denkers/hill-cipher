@@ -15,6 +15,7 @@ public class ChatPanel extends JPanel
     private ConversationPanel convoPanel;
     private TransitionPanel transitionPanel;
     private ChatConversation conversation;
+    private String currentCard;
     
     public ChatPanel()
     {
@@ -23,6 +24,7 @@ public class ChatPanel extends JPanel
         convoPanel      =   new ConversationPanel(this);
         transitionPanel =   new TransitionPanel(this);
         conversation    =   new ChatConversation();
+        currentCard     =   CONNECT_CARD;
         conversation.setParentPanel(this);
         
         add(connectPanel, CONNECT_CARD);
@@ -65,9 +67,15 @@ public class ChatPanel extends JPanel
         return conversation;
     }
     
+    public String getCurrentCard()
+    {
+        return currentCard;
+    }
+    
     public void changeView(String cardName)
     {
         CardLayout cLayout  =   (CardLayout) getLayout();
         cLayout.show(this, cardName);
+        currentCard =   cardName;
     }
 }

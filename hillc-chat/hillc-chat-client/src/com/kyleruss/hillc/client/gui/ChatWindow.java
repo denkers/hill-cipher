@@ -2,6 +2,9 @@
 package com.kyleruss.hillc.client.gui;
 
 import com.kyleruss.hillc.client.Config;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -48,11 +51,25 @@ public class ChatWindow
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
+        frame.addWindowListener(new ChatWindowListener());
     }
     
     public void display()
     {
         frame.setVisible(true);
+    }
+    
+    private class ChatWindowListener extends WindowAdapter
+    {
+        @Override
+        public void windowClosing(WindowEvent e)
+        {
+            Set<String> activeRooms =   MainPanel.getInstance().getChatPanes().keySet();
+            for(String room : activeRooms)
+                MainPanel.getInstance().leaveRoom(room);
+            
+            System.exit(0);
+        }
     }
     
     public static ChatWindow getInstance()

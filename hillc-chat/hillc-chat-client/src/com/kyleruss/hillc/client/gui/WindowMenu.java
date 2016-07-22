@@ -74,7 +74,7 @@ public class WindowMenu extends JMenuBar implements ActionListener
             MainPanel.getInstance().addChatRoom();
         
         else if(src == leaveChatItem)
-            MainPanel.getInstance().removeChatPane();
+            MainPanel.getInstance().leaveRoom();
     }
     
     public static WindowMenu getInstance(JFrame frame)
