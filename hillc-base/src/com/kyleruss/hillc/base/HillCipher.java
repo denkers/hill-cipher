@@ -13,10 +13,10 @@ public class HillCipher
         for(int i = 0; i < plainTextMatrix.length; i++)
         {
             int[] entry     =   plainTextMatrix[i];
-            cipherMatrix[i] =   MatrixUtils.multiplyMatrix(keyMatrix, entry, 26);
+            cipherMatrix[i] =   MatrixUtils.multiplyMatrix(keyMatrix, entry, mod);
         } 
         
-        return new CStructure(cipherMatrix, mod);
+        return new CStructure(cipherMatrix, mod, plainText.getVectorSize());
     }
     
     public static CStructure invKeyDecrypt(CStructure cipher, CStructure invKey, int mod)
@@ -32,21 +32,12 @@ public class HillCipher
                 plainText += MatrixUtils.getVectorString(decVector, mod);
         } 
         
-        return new CStructure(plainText, mod);
+        return new CStructure(plainText, mod, cipher.getVectorSize());
     }
     
     public static CStructure decrypt(CStructure cipher, CStructure key, int mod)
     {
-        CStructure invKey   =   new CStructure(MatrixUtils.getInverse(key.getMatrix(), mod), mod);
+        CStructure invKey   =   new CStructure(MatrixUtils.getInverse(key.getMatrix(), mod), mod, cipher.getVectorSize());
         return invKeyDecrypt(cipher, invKey, mod);
-    }
-
-    public static void main(String[] args)
-    {
-        CStructure key      =   new CStructure("alph", 26);
-        CStructure text     =   new CStructure("defendthewestwallofthecastle", 26);
-        CStructure cipher   =   encrypt(text, key, 26);
-        CStructure dec      =   decrypt(cipher, key, 26);
-        System.out.println(dec.getText());
     }
 }

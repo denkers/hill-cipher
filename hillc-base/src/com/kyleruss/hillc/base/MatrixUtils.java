@@ -126,7 +126,7 @@ public class MatrixUtils
                 if(mod == 26)
                     charCode    =   alphaCharList.indexOf(textSegment.charAt(i));
                 else
-                    charCode    =   textSegment.charAt(i) - '0';
+                    charCode    =   (int) textSegment.charAt(i);
             }
             
             pTextVector[i]  =   charCode;
@@ -168,7 +168,7 @@ public class MatrixUtils
             if(mod == 26)
                 text += alphaCharList.get(v[i]);
             else
-                text += (v[i] == 0)? "" : (char) (v[i] + '0');
+                text += (v[i] == 0? "" : ((char) v[i]));
         }
         
         return text;
@@ -367,9 +367,8 @@ public class MatrixUtils
     
     public static void main(String[] args)
     {
-        int[][] a   =   new int[][] {{19, 7}, {7, 4}};
-        int[][] inv    =   getInverse(a, 26);
-        System.out.println(matrixToString(inv));
+        String a    =   "a";
+        int code    =   a.charAt(0) - '0';
     }
     
 }
