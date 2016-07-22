@@ -1,3 +1,8 @@
+//-------------------------------------
+//  Kyle Russell
+//  AUT University 2016
+//  Highly Secured Systems
+//-------------------------------------
 
 package com.kyleruss.hillc.server.message;
 
