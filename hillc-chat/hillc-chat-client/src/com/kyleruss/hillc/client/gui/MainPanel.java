@@ -1,6 +1,8 @@
 package com.kyleruss.hillc.client.gui;
 
+import com.kyleruss.hillc.client.ChatClient;
 import com.kyleruss.hillc.client.Config;
+import com.kyleruss.jsockchat.commons.message.DisconnectMsgBean;
 import com.kyleruss.jsockchat.commons.message.JoinRoomMsgBean;
 import com.kyleruss.jsockchat.commons.message.Message;
 import com.kyleruss.jsockchat.commons.message.ResponseMessage;
@@ -9,11 +11,13 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -73,6 +77,35 @@ public class MainPanel extends JPanel implements ActionListener
             chatPanel.getConvoPanel().addServerMessage(new Date(), content);
         else
             chatPanel.getConvoPanel().addMessage(source, new Date(), content);
+    }
+    
+    public void leaveRoom()
+    {
+        int index   =   chatTabPane.getSelectedIndex();
+        if(index != -1)
+        {
+            String roomName     =   chatTabPane.getTitleAt(index);
+            ChatPanel chatPanel =   chatPanes.get(roomName);
+            if(chatPanel == null) JOptionPane.showMessageDialog(null, "[Error] Cannot leave room");
+            else
+            {
+                try
+                {
+                    String displayName      =   chatPanel.getConversation().getDisplayName();
+                    DisconnectMsgBean bean  =   new DisconnectMsgBean(DisconnectMsgBean.ROOM_LEAVE);
+                    bean.setRoom(roomName);
+                    ChatClient.getInstance().sendMessage(displayName, bean);
+
+                    chatPanes.remove(roomName);
+                    chatTabPane.remove(index);
+                }
+                
+                catch(IOException e)
+                {
+                    JOptionPane.showMessageDialog(null, "[Error] Failed to leave room");
+                }
+            }
+        }
     }
     
     public ChatPanel getChatPane(String name)

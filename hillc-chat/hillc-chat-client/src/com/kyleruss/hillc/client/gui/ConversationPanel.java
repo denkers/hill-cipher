@@ -106,6 +106,9 @@ public class ConversationPanel extends JPanel
             Object src  =   e.getSource();
             if(src == sendBtn)
                 sendMsg();
+            
+            else if(src == leaveBtn)
+                MainPanel.getInstance().leaveRoom();
         }
     }
 }
