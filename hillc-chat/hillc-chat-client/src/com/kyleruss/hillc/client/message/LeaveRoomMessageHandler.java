@@ -6,6 +6,7 @@
 
 package com.kyleruss.hillc.client.message;
 
+import com.kyleruss.hillc.client.ChatMessage;
 import com.kyleruss.hillc.client.gui.MainPanel;
 import com.kyleruss.jsockchat.client.message.ClientMessageHandler;
 import com.kyleruss.jsockchat.commons.message.Message;
@@ -20,8 +21,9 @@ public class LeaveRoomMessageHandler implements ClientMessageHandler
         RequestMessage request      =   ((ResponseMessage) message).getRequestMessage();
         String user                 =   (String) request.getProperty("display_name");
         String content              =   user + " has disconnected";
+        ChatMessage chatMessage     =   new ChatMessage(content);
         
-        MainPanel.getInstance().outputToRoom(message, content, null);
+        MainPanel.getInstance().outputToRoom(message, chatMessage);
     }
 
     @Override

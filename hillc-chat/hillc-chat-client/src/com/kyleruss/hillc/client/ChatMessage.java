@@ -6,6 +6,7 @@
 
 package com.kyleruss.hillc.client;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ChatMessage 
@@ -14,13 +15,13 @@ public class ChatMessage
     private String content;
     private String encryptedContent;
     private String user;
-    private String key;
     private Date date;
     
     public ChatMessage(String content)
     {
         this.content    =   content;
         isServerMessage =   true;
+        user            =   "SERVER";
         date            =   new Date();
     }
 
@@ -74,13 +75,15 @@ public class ChatMessage
         this.date = date;
     }
 
-    public String getKey() 
+    @Override
+    public String toString()
     {
-        return key;
-    }
-
-    public void setKey(String key) 
-    {
-        this.key = key;
+        String messageStr   =   "[";
+        String dateStr      =   new SimpleDateFormat("hh:mm a").format(date);
+        messageStr          +=  dateStr + "] ";
+        messageStr          +=  user + ": ";
+        messageStr          +=  content;
+        
+        return messageStr;
     }
 }

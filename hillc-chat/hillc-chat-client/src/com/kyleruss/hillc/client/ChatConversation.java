@@ -9,6 +9,7 @@ package com.kyleruss.hillc.client;
 import com.kyleruss.hillc.base.CStructure;
 import com.kyleruss.hillc.base.HillCipher;
 import com.kyleruss.hillc.client.gui.ChatPanel;
+import com.kyleruss.hillc.client.gui.ConversationPanel;
 import com.kyleruss.jsockchat.commons.message.BroadcastMsgBean;
 import java.io.IOException;
 import javax.swing.JOptionPane;
@@ -82,6 +83,13 @@ public class ChatConversation
             CStructure keyStruc             =   new CStructure(key, charSet, vecSize);
             CStructure encryptedStruc       =   HillCipher.encrypt(plainTextStruc, keyStruc, charSet);
             String encryptedText            =   encryptedStruc.getText();
+            
+            ConversationPanel conversation  =   parentPanel.getConvoPanel();
+            ChatMessage chatMessage         =   new ChatMessage(message);
+            chatMessage.setEncryptedContent(encryptedText);
+            chatMessage.setIsServerMessage(false);
+            chatMessage.setUser(displayName);
+            conversation.addMessage(chatMessage);
             
             BroadcastMsgBean messageBean    =   new BroadcastMsgBean(roomName, encryptedText);
             ChatClient.getInstance().sendMessage(displayName, messageBean);

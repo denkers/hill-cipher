@@ -6,6 +6,7 @@
 
 package com.kyleruss.hillc.client.message;
 
+import com.kyleruss.hillc.client.ChatMessage;
 import com.kyleruss.hillc.client.gui.MainPanel;
 import com.kyleruss.jsockchat.client.message.ClientMessageHandler;
 import com.kyleruss.jsockchat.commons.message.Message;
@@ -20,13 +21,14 @@ public class JoinRoomMessageHandler implements ClientMessageHandler
         RequestMessage request      =   ((ResponseMessage) message).getRequestMessage();
         String displayName          =   (String) request.getProperty("display_name");
         String content              =   displayName + " has connected";
-        MainPanel.getInstance().outputToRoom(message, content, null);
+        ChatMessage chatMessage     =   new ChatMessage(content);
+        MainPanel.getInstance().outputToRoom(message, chatMessage);
     }
     
     
     @Override
     public void performAction(Message message) 
     {
-        MainPanel.getInstance().outputToRoom(message, message.getDescription(), null);
+        MainPanel.getInstance().outputToRoom(message, new ChatMessage(message.getDescription()));
     }
 }

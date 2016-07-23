@@ -7,6 +7,7 @@
 package com.kyleruss.hillc.client.gui;
 
 import com.kyleruss.hillc.client.ChatClient;
+import com.kyleruss.hillc.client.ChatMessage;
 import com.kyleruss.hillc.client.Config;
 import com.kyleruss.jsockchat.commons.message.DisconnectMsgBean;
 import com.kyleruss.jsockchat.commons.message.Message;
@@ -71,17 +72,13 @@ public class MainPanel extends JPanel implements ActionListener
         chatTabPane.setSelectedIndex(index);
     }
     
-    public void outputToRoom(Message message, String content, String source)
+    public void outputToRoom(Message message, ChatMessage chatMessage)
     {
         ResponseMessage response    =   (ResponseMessage) message;
         RoomBean bean               =   (RoomBean) response.getRequestMessage().getMessageBean();
         ChatPanel chatPanel         =   MainPanel.getInstance().getChatPane(bean.getRoom());
         chatPanel.showConversationPanel();
-        
-        if(source == null)
-            chatPanel.getConvoPanel().addServerMessage(new Date(), content);
-        else
-            chatPanel.getConvoPanel().addMessage(source, new Date(), content);
+        chatPanel.getConvoPanel().addMessage(chatMessage);
     }
     
     public void leaveRoom(String roomName)

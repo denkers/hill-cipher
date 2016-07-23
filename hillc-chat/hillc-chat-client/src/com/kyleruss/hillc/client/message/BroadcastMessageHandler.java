@@ -8,6 +8,7 @@ package com.kyleruss.hillc.client.message;
 
 import com.kyleruss.hillc.base.CStructure;
 import com.kyleruss.hillc.base.HillCipher;
+import com.kyleruss.hillc.client.ChatMessage;
 import com.kyleruss.hillc.client.gui.ChatPanel;
 import com.kyleruss.hillc.client.gui.MainPanel;
 import com.kyleruss.jsockchat.client.message.ClientMessageHandler;
@@ -39,7 +40,11 @@ public class BroadcastMessageHandler implements ClientMessageHandler
             CStructure decStruc =   HillCipher.decrypt(cipherStruc, keyStruc, charSet);
             
             String decText      =   decStruc.getText();
-            MainPanel.getInstance().outputToRoom(message, decText, user);
+            ChatMessage chatMsg =   new ChatMessage(decText);
+            chatMsg.setEncryptedContent(cipherText);
+            chatMsg.setUser(user);
+            chatMsg.setIsServerMessage(false);
+            MainPanel.getInstance().outputToRoom(message, chatMsg);
         }
     }
 

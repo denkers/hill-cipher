@@ -7,14 +7,13 @@
 package com.kyleruss.hillc.client.gui;
 
 import com.kyleruss.hillc.client.ChatConversation;
+import com.kyleruss.hillc.client.ChatMessage;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -48,20 +47,9 @@ public class ConversationPanel extends JPanel
         add(controlPanel, BorderLayout.SOUTH);
     }
     
-    public void addServerMessage(Date timeSent, String message)
+    public void addMessage(ChatMessage message)
     {
-        addMessage("SERVER", timeSent, message);
-    }
-    
-    public void addMessage(String name, Date timeSent, String message)
-    {
-        String messageStr   =   "[";
-        String dateStr      =   new SimpleDateFormat("hh:mm a").format(timeSent);
-        messageStr          +=  dateStr + "] ";
-        messageStr          +=  name + ": ";
-        messageStr          +=  message;
-        
-        chatModel.addElement(messageStr);
+        chatModel.addElement(message);
     }
     
     private class ControlPanel extends JPanel implements ActionListener
@@ -97,10 +85,8 @@ public class ConversationPanel extends JPanel
         {
             String message                  =   chatInputField.getText();
             ChatConversation conversation   =   parentPanel.getConversation();   
-            String dispName                 =   conversation.getDisplayName();
 
             chatInputField.setText("");
-            addMessage(dispName, new Date(), message);
             conversation.sendMessage(message);
         }
         
