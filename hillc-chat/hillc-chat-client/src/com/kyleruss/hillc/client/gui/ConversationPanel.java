@@ -22,11 +22,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.ListCellRenderer;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import net.miginfocom.swing.MigLayout;
 
-public class ConversationPanel extends JPanel implements ListCellRenderer
+public class ConversationPanel extends JPanel implements ListCellRenderer, ListSelectionListener
 {
     private JList chatList;
     private DefaultListModel chatModel;
@@ -41,6 +45,7 @@ public class ConversationPanel extends JPanel implements ListCellRenderer
         chatList            =   new JList(chatModel);
         controlPanel        =   new ControlPanel();
         chatList.setCellRenderer(this);
+        chatList.addListSelectionListener(this);
         
         JPanel titleWrapper =   new JPanel();
         titleWrapper.setBackground(Color.WHITE);
@@ -70,6 +75,31 @@ public class ConversationPanel extends JPanel implements ListCellRenderer
             defaultComponent.setIcon(new ImageIcon(AppResources.getInstance().getUserImage()));
         
         return defaultComponent;
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) 
+    {
+        Object value    =   chatList.getSelectedValue();
+        if(value != null)
+        {
+            ChatMessage chatMsg =   (ChatMessage) value;
+            if(chatMsg.isServerMessage()) return;
+            else
+            {
+                JPanel messageDisplayPanel  =   new JPanel(new MigLayout());
+                messageDisplayPanel.add(new JLabel("Plain text: "));
+                messageDisplayPanel.add(new JLabel(chatMsg.getContent()), "wrap");
+                messageDisplayPanel.add(new JLabel("Encrypted text: "));
+                messageDisplayPanel.add(new JLabel(chatMsg.getEncryptedContent()), "wrap");
+                messageDisplayPanel.add(new JLabel("User: "));
+                messageDisplayPanel.add(new JLabel(chatMsg.getUser()), "wrap");
+                messageDisplayPanel.add(new JLabel("Time sent: "));
+                messageDisplayPanel.add(new JLabel(chatMsg.getFormattedDateString()));
+                
+                JOptionPane.showMessageDialog(null, messageDisplayPanel);
+            }
+        }
     }
     
     private class ControlPanel extends JPanel implements ActionListener

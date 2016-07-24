@@ -74,12 +74,17 @@ public class ChatMessage
     {
         this.date = date;
     }
+    
+    public String getFormattedDateString()
+    {
+        return new SimpleDateFormat("hh:mm a").format(date);
+    }
 
     @Override
     public String toString()
     {
         String messageStr   =   "[";
-        String dateStr      =   new SimpleDateFormat("hh:mm a").format(date);
+        String dateStr      =   getFormattedDateString();
         messageStr          +=  dateStr + "] ";
         messageStr          +=  user + ": ";
         messageStr          +=  content;
