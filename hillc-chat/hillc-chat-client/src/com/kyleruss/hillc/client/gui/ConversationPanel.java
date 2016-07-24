@@ -10,19 +10,23 @@ import com.kyleruss.hillc.client.ChatConversation;
 import com.kyleruss.hillc.client.ChatMessage;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.ListCellRenderer;
 
-public class ConversationPanel extends JPanel
+public class ConversationPanel extends JPanel implements ListCellRenderer
 {
     private JList chatList;
     private DefaultListModel chatModel;
@@ -36,6 +40,7 @@ public class ConversationPanel extends JPanel
         chatModel           =   new DefaultListModel();
         chatList            =   new JList(chatModel);
         controlPanel        =   new ControlPanel();
+        chatList.setCellRenderer(this);
         
         JPanel titleWrapper =   new JPanel();
         titleWrapper.setBackground(Color.WHITE);
@@ -50,6 +55,21 @@ public class ConversationPanel extends JPanel
     public void addMessage(ChatMessage message)
     {
         chatModel.addElement(message);
+    }
+
+    @Override
+    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
+    {
+        ChatMessage msg                         =   (ChatMessage) value;
+        DefaultListCellRenderer defaultRenderer =   new DefaultListCellRenderer();
+        JLabel defaultComponent                 =   (JLabel) defaultRenderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+        
+        if(msg.isServerMessage())
+            defaultComponent.setIcon(new ImageIcon(AppResources.getInstance().getConnImage()));
+        else
+            defaultComponent.setIcon(new ImageIcon(AppResources.getInstance().getUserImage()));
+        
+        return defaultComponent;
     }
     
     private class ControlPanel extends JPanel implements ActionListener

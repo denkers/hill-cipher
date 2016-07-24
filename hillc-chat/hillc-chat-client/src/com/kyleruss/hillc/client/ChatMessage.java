@@ -25,7 +25,7 @@ public class ChatMessage
         date            =   new Date();
     }
 
-    public boolean isIsServerMessage()
+    public boolean isServerMessage()
     {
         return isServerMessage;
     }
