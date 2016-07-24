@@ -91,15 +91,4 @@ public class HillCipher
         CStructure invKey   =   new CStructure(MatrixUtils.getInverse(key.getMatrix(), mod), mod, cipher.getVectorSize());
         return invKeyDecrypt(cipher, invKey, mod);
     }
-
-    public static void main(String[] args)
-    {
-        CStructure key      =   new CStructure("alphabeta", ALL_CHARS, LARGE_V);
-        CStructure text     =   new CStructure("wea booz", ALL_CHARS, LARGE_V);
-        CStructure cipher   =   encrypt(text, key, ALL_CHARS);
-        String cipherText   =   cipher.getText();
-        CStructure cCipher  =   new CStructure(cipherText, ALL_CHARS, LARGE_V);
-        CStructure dec      =   decrypt(cCipher, key, ALL_CHARS);
-        System.out.println(dec.getText());
-    }
 }

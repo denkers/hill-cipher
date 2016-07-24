@@ -113,7 +113,7 @@ public class BreakerPanel extends JPanel
             
             if(validateCipherText(cipherText) && validateKnownText(knownText))
             {
-                CStructure cipherStructure                          =   new CStructure(cipherText, 26);
+                CStructure cipherStructure                          =   new CStructure(cipherText, 26, 2);
                 List<Entry<CStructure, CStructure>> attemptList     =   HillCipherBreaker.breakCipher(cipherStructure, knownText);
                 outputPanel.outputModel.setNumRows(0);
                 

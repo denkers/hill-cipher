@@ -61,15 +61,15 @@ public class HillCipherBreaker
         int[][] guessTranspose      =   MatrixUtils.getTranspose(guessStruc.getMatrix());
         int[][] cipherTranspose     =   MatrixUtils.getTranspose(cipherStruc.getMatrix());
         
+        
         if(!MatrixUtils.isInvertible(cipherStruc.getMatrix(), 26))
             return null;
         
         else
         {
             int[][] inverse             =   MatrixUtils.getInverse(cipherTranspose, 26);
-            CStructure key              =   new CStructure(MatrixUtils.multiplyDimMatrix(guessTranspose, inverse, 26), 26);
+            CStructure key              =   new CStructure(MatrixUtils.multiplyDimMatrix(guessTranspose, inverse, 26), 26, 2);
             CStructure decryptedCipher  =   HillCipher.invKeyDecrypt(cipher, key, 26);
-
             return new SimpleEntry(key, decryptedCipher);
         }
     }
@@ -82,13 +82,14 @@ public class HillCipherBreaker
      */
     public static CStructure getBigrams(String text, int offset)
     {
-        CStructure bigramA      =   new CStructure(text.substring(offset, offset + 2), 26);
-        CStructure bigramB      =   new CStructure(text.substring(offset + 2, offset + 4), 26);
+        CStructure bigramA      =   new CStructure(text.substring(offset, offset + 2), 26, 2);
+        CStructure bigramB      =   new CStructure(text.substring(offset + 2, offset + 4), 26, 2);
         int[][] bigramMatrix    =   new int[2][2];
         
         bigramMatrix[0]         =   bigramA.getRow(0);
         bigramMatrix[1]         =   bigramB.getRow(0);
         
-        return new CStructure(bigramMatrix, 26);
+        return new CStructure(bigramMatrix, 26, 2);
     }
+    
 }
