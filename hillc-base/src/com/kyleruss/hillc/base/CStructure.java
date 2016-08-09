@@ -25,7 +25,7 @@ public class CStructure
     
     private void initText()
     {
-        text  =   MatrixUtils.matrixToString(matrix);
+        text  =   MatrixUtils.getMatrixString(matrix);
     }
     
     public int getVectorSize()

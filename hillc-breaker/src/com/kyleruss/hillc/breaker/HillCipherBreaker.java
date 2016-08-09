@@ -14,12 +14,20 @@ public class HillCipherBreaker
     public static List<Entry<CStructure, CStructure>> breakCipher(CStructure cipher, String knownPlaintext)
     {
         List<Entry<CStructure, CStructure>> attemptList =   new ArrayList<>();
-        int numRounds   =   cipher.getText().length() - knownPlaintext.length();
+        int numRounds   =   cipher.getText().length() - knownPlaintext.length() + 2;
         
-        for(int i = 0 ; i< numRounds; i++)
-            attemptList.add(getAttemptRound(cipher, knownPlaintext, i));
+        for(int i = 0; i < numRounds; i++)
+        {
+            Entry<CStructure, CStructure> attempt   =   getAttemptRound(cipher, knownPlaintext, i);
+            if(attempt != null) attemptList.add(attempt);
+        }
         
         return attemptList;
+    }
+    
+    public static String testStr(String s)
+    {
+        return "[" + s.substring(0, 2) + " " + s.substring(2) + "]";
     }
     
     public static Entry<CStructure, CStructure> getAttemptRound(CStructure cipher, String knownPlaintext, int offset)
@@ -29,17 +37,29 @@ public class HillCipherBreaker
         int startOffset             =   startBigram? offset : offset + 1;
         CStructure guessStruc       =   getBigrams(knownPlaintext, startIndex);
         CStructure cipherStruc      =   getBigrams(cipher.getText(), startOffset);
-        CStructure invCipherStruc   =   new CStructure(MatrixUtils.getInverse(cipherStruc.getMatrix()));
-        CStructure decKey           =   new CStructure(MatrixUtils.multiplyDimMatrix(guessStruc.getMatrix(), invCipherStruc.getMatrix(), 255));
-        CStructure decryptedCipher  =   HillCipher.decrypt(cipher, decKey);
         
-        return new SimpleEntry(decKey, decryptedCipher);
+        System.out.println("[" + offset + "] cipher: " + testStr(cipherStruc.getText()) + " guess: " + testStr(guessStruc.getText()));
+        int[][] guessTranspose      =   MatrixUtils.getTranspose(guessStruc.getMatrix());
+        int[][] cipherTranspose     =   MatrixUtils.getTranspose(cipherStruc.getMatrix());
+        
+        if(!MatrixUtils.isInvertible(cipherStruc.getMatrix(), 26))
+            return null;
+        
+        else
+        {
+            int[][] inverse             =   MatrixUtils.getInverse(cipherTranspose);
+
+            CStructure key              =   new CStructure(MatrixUtils.multiplyDimMatrix(guessTranspose, inverse, 26));
+            CStructure decryptedCipher  =   HillCipher.decrypt(cipher, key);
+
+            return new SimpleEntry(key, decryptedCipher);
+        }
     }
     
     public static CStructure getBigrams(String text, int offset)
     {
         CStructure bigramA      =   new CStructure(text.substring(offset, offset + 2));
-        CStructure bigramB      =   new CStructure(text.substring(offset + 2));
+        CStructure bigramB      =   new CStructure(text.substring(offset + 2, offset + 4));
         int[][] bigramMatrix    =   new int[2][2];
         
         bigramMatrix[0]         =   bigramA.getRow(0);
@@ -50,11 +70,16 @@ public class HillCipherBreaker
     
     public static void main(String[] args)
     {
+        CStructure key      =   new CStructure("alph");
+        CStructure text     =   new CStructure("defendthewestwallofthecastle");
         CStructure cipher   =   new CStructure("fupcmtgzkyukbqfjhuktzkkixtta");
+        CStructure decr     =   HillCipher.decrypt(cipher, key);
         String knownText    =   "ofthe";
+        
+        System.out.println(cipher.getText());
         List<Entry<CStructure, CStructure>> attempts    =   breakCipher(cipher, knownText);
         
         for(Entry<CStructure, CStructure> attempt : attempts)
-            System.out.println(attempt.getValue().getText());
+            System.out.println(attempt.getValue().getText()); 
     }
 }

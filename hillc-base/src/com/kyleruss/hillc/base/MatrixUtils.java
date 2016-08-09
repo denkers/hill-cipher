@@ -1,8 +1,25 @@
 package com.kyleruss.hillc.base;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MatrixUtils
 {
+    private static List<Character> alphaCharList;
+    
+    static
+    {
+        initAlphaCharList();
+    }
+    
+    private static void initAlphaCharList()
+    {
+        alphaCharList   =   new ArrayList<>();
+        for(char c = 'a'; c <= 'z'; c++)
+            alphaCharList.add(c);
+    }
+    
     public static int[] multiplyMatrix(int[][] a, int[] b, int mod)
     {
         int m                =   b.length;
@@ -71,6 +88,7 @@ public class MatrixUtils
         return str;
     }
     
+    
     private static int euclInverse(int a, int mod)
     {
         int x       =   0;
@@ -103,7 +121,7 @@ public class MatrixUtils
             int charCode;
             
             if(textSegment.length() <= i) charCode = 0;
-            else charCode    =   textSegment.charAt(i) - '0';
+            else charCode    =   alphaCharList.indexOf(textSegment.charAt(i));//textSegment.charAt(i) - '0';
             
             pTextVector[i]  =   charCode;
         }
@@ -127,16 +145,33 @@ public class MatrixUtils
         return plainTextMatrix;
     }
     
+    public static String getMatrixString(int[][] m)
+    {
+        String text =   "";
+        for(int i = 0; i < m.length; i++)
+            text += getVectorString(m[i]);
+            /*for(int j = 0; j < m[0].length; j++)
+                text += alphaCharList.get(m[i][j]); //(char) (m[i][j] + '0');// */
+        
+        return text;
+    }
+    
+    public static String getVectorString(int[] v)
+    {
+        String text =   "";
+        for(int i = 0; i < v.length; i++)
+            text += alphaCharList.get(v[i]);
+        
+        return text;
+    }
+    
     public static int[][] getInverse(int[][] m)
     {
         int[][] inverseMatrix;
         boolean smallMatrix         =   m.length == 2;
-        int determinant             =   (smallMatrix? getDeterminantSmall(m) : getDeterminant(m)) % 255;
-        if(determinant < 0)
-            determinant += 255;
+        int determinant             =   getDeterminant(m, 26);
         
-        int determinantInverse      =   euclInverse(determinant, 255);
-        
+        int determinantInverse      =   euclInverse(determinant, 26);
         
         if(smallMatrix)
             inverseMatrix           =   getAdjSmallMatrix(m);
@@ -147,12 +182,21 @@ public class MatrixUtils
             inverseMatrix           =   createCofactorMatrix(inverseMatrix);
         }
         
-        inverseMatrix               =   scalarMultiplyMatrix(inverseMatrix, determinantInverse, 255);
+        inverseMatrix               =   scalarMultiplyMatrix(inverseMatrix, determinantInverse, 26);
         
         return inverseMatrix;
     }
     
-    public static int getDeterminant(int[][] m)
+    public static int getDeterminant(int[][] m, int mod)
+    {
+        int det =   (m.length == 2? getDeterminantSmall(m) : getDeterminantLarge(m)) % 26;
+        if(det < 0)
+            det += 26;
+        
+        return det;
+    }
+    
+    public static int getDeterminantLarge(int[][] m)
     {
         int value            =   0;
         int[][] detMatrix    =   getDeterminantMatrix(m);
@@ -188,10 +232,10 @@ public class MatrixUtils
                     val *= -1;
                 }
                 
-                val  =   val % 255;
+                val  =   val % 26;
                 
                 if(val < 0)
-                    val += 255;
+                    val += 26;
                 
                 adjMatrix[i][j] = val;
             }
@@ -204,9 +248,10 @@ public class MatrixUtils
         return adjMatrix;
     }
     
-    public static boolean isInvertible(int[][] m)
+    public static boolean isInvertible(int[][] m, int mod)
     {
-        return getDeterminant(m) != 0;
+        int det     =   getDeterminant(m, 26);
+        return det != 0 && euclInverse(det, mod) > 0;
     }
     
     private static int[][] createCofactorMatrix(int[][] m)
@@ -255,10 +300,10 @@ public class MatrixUtils
             result      =   result * -1;
         
         result          =   result == -0? 0 : result;
-        result          =   result % 255;
+        result          =   result % 26;
         
         if(result < 0)
-            result      +=  255;
+            result      +=  26;
         
         return result;
     }
@@ -315,10 +360,9 @@ public class MatrixUtils
     
     public static void main(String[] args)
     {
-        int[][] a   =   new int[][] {{5, 7}, {19, 4}};
-        int[][] b   =   new int[][] {{19, 14}, {24, 15}};
-        
-        int[][] result  =   multiplyDimMatrix(a, b, 255);
-        System.out.println(matrixToString(result));
+        int[][] a   =   new int[][] {{19, 7}, {7, 4}};
+        int[][] inv    =   getInverse(a);
+        System.out.println(matrixToString(inv));
     }
+    
 }
