@@ -4,6 +4,11 @@
 
 [![forthebadge](https://forthebadge.com/images/badges/made-with-java.svg)](https://forthebadge.com)
 
+HCipher Chat is an encrypted instant messaging desktop application  
+Messages are encrypted & decrypted using the classical [Hill cipher](https://en.wikipedia.org/wiki/Hill_cipher)  
+The chat application offers many features and the project also includes a hill cipher cracking tool  
+See [Documentation](Documentation.pdf) for a user-guide and full write up of the methods used 
+
 ## Features
 - Encrypted instant messaging
 - Private and group sessions
