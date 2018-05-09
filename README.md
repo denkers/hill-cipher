@@ -1,6 +1,6 @@
 # HCipher Chat
 
-<img src="Preview/AppPreview.png" />
+<img src="preview/AppPreview.png" />
 
 [![forthebadge](https://forthebadge.com/images/badges/made-with-java.svg)](https://forthebadge.com)
 
@@ -44,7 +44,7 @@ If you wish to leave the room click `Leave`
 This project also includes a tool for cracking hill ciphers  
 You can view this tool in the `hillc-breaker` directory  
 
-<img src="Preview/HCipherBreakerPreview.png" />
+<img src="preview/HCipherBreakerPreview.png" />
 
 Enter the cipher text of the hill-cipher you wish to crack  
 Enter some known plain text and then click `Crack`  
