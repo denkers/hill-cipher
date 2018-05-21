@@ -27,14 +27,15 @@ See [Documentation](Documentation.pdf) for a user-guide and full write up of the
 - Launch the client in `hillc-chat/hillc-chat-client/HCipherChat.exe`
 
 ### Usage
-- ##### Connecting to a room
+
+#### Connecting to a room
 Launch the HCipher Chat client  
 You will be prompted to enter a display name which is the name that appears to other users,  
 the room name which is the channel ID that other users can use to connect to your room and  
 finally, the room key which is the private hill cipher key used to encrypt & decrypt messages in the room  
 **Note:** You can join and be chatting in multiple rooms simultaneously, just click the `+` tab to join/create a new room
 
-- ##### Chatting
+#### Chatting
 Once you are connected to a chat room you can begin chatting  
 Enter your message in the provided text box and click `Send`  
 You can view the details of a message including the encrypted text by clicking on it  
